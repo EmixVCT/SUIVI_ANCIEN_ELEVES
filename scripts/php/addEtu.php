@@ -125,48 +125,66 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 	?>
 	<div class="form-group">
 		<div class='row'>
-			<div class="col-md-3">
+			<div class="col-md-6">
 				<label class="control-label" for="prenom">Prénom (requis)</label>  
 				<input id="prenom" name="prenom" type="text" placeholder="" class="form-control input-md">
 			</div>
 			
-			<div class="col-md-3">
+			<div class="col-md-6">
 				<label class="control-label" for="nom">Nom (requis)</label>  
 				<input id="nom" name="nom" type="text" placeholder="" class="form-control input-md">
-			</div>
-			
-			<div class="col-md-6">
-				<label class="control-label" for="lieu_poursuite">Lieu poursuite</label>
-				<input id="lieu_poursuite" name="lieu_poursuite" type="text" placeholder="ville / département" class="form-control input-md">
-			</div>
+			</div>	
 		</div>
-		<div class='row'>
+		
+		<div class='row'>	
 			<div class="col-md-6">
-				<label class="control-label" for="mail">Adresse email</label> 
-				<input id="mail" name="mail" type="email" placeholder="xxx@xxx.x" class="form-control input-md">
-			</div>
-			
-			<div class="col-md-6">	
-				<label class="control-label" for="type_poursuite">Type poursuite</label>  
-				<input id="type_poursuite" name="type_poursuite" type="text" placeholder="Alternance ou Initial" class="form-control input-md">
-			</div>
-		</div>
-		<div class='row'>		
-			<div class="col-md-3">
+				<label class="control-label" for="formation">Formation (requis)</label> 
+				<input id="formation" name="formation" type="text" placeholder="" class="form-control input-md">
+			</div>		
+			<div class="col-md-6">
 				<label class="control-label" for="promotion">Promotion</label>  
 				<input id="promotion" name="promotion" type="text" placeholder="" class="form-control input-md">
 			</div>
 
-			<div class="col-md-3">
-				<label class="control-label" for="formation">Formation (requis)</label> 
-				<input id="formation" name="formation" type="text" placeholder="" class="form-control input-md">
+		</div>
+		
+		<div class='row'>
+			<div class="col-md-12">
+				<label class="control-label" for="mail">Adresse email</label> 
+				<input id="mail" name="mail" type="email" placeholder="xxx@xxx.x" class="form-control input-md">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4">		
+				<label class="control-label" for="formation_poursuite">Formation poursuite</label>
+				<select class="custom-select" name="formation_poursuite" id="formation_poursuite" required>
+					<option value="">N/A</option>
+					<option value="Ecole d'ingenieur"> École d'ingénieur</option>
+					<option value="Miage"> MIAGE</option>
+					<option value="L3"> L3 </option>
+					<option value="Licence professionnelle"> Licence professionnelle</option>
+					<option value="Bachelor"> Bachelor </option>
+					<option value="Aucune"> Aucune</option>
+					<option id="autre" value="Autre"> Autre..</option>
+				</select>				
+				<!--<input id="formation_poursuite" name="formation_poursuite" type="text" placeholder="" class="form-control input-md">-->
 			</div>
 			
-			<div class="col-md-6">		
-				<label class="control-label" for="formation_poursuite">Formation poursuite</label>  
-				<input id="formation_poursuite" name="formation_poursuite" type="text" placeholder="" class="form-control input-md">
+			<div class="col-md-4">	
+				<label class="control-label" for="type_poursuite">Type poursuite</label>  
+				<select class="custom-select" name="type_poursuite" id="type_poursuite" required>
+					<option value="">N/A</option>
+					<option value="initiale">Initial</option>
+					<option value="alternance">Alternance</option>
+				</select>
+				<!--<input id="type_poursuite" name="type_poursuite" type="text" placeholder="Alternance ou Initial" class="form-control input-md">-->
 			</div>
-		
+			
+			<div class="col-md-4">
+				<label class="control-label" for="lieu_poursuite">Lieu poursuite</label>
+				<input id="lieu_poursuite" name="lieu_poursuite" type="text" placeholder="ville / département" class="form-control input-md">
+			</div>
 		</div>
 	</div>
 </form>

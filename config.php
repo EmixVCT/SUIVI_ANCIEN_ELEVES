@@ -4,6 +4,7 @@
 	
 	
 	//Variables globales
+	$formations_p = Array("Ecole d'ingenieur","Miage","L3","Licence professionnelle","Bachelor","Aucune","");
 	$fichiersInclude = "include/";
 	$serveur = "localhost";
 	$login = "root";
