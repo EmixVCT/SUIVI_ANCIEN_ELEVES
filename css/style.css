@@ -1,0 +1,172 @@
+
+
+/*Récupération de la police d'écriture*/
+@font-face {
+	font-family: "Gotham";
+	src: url('../police/Gotham-Light.ttf');
+}
+
+@media (min-width: 992px) { }
+/*La fenetre*/
+body{
+	font: normal 112.5%/1.5 "corbel", Arial, "Helvetica Neue", Helvetica, "Bitstream Vera Sans", sans-serif;
+	background-color: #ecf0f1;
+	color: #000;
+	max-width:100%
+}
+
+h1{
+	font-family: "Gotham", Cambria, georgia, times, "times new roman", serif;
+	font-size: 1.9em;
+	text-transform: uppercase;
+	margin:10px;
+}
+/*Entete*/
+.jumbotrom{
+	background-color: #FFF;
+}
+
+/*Spec de la bar de navigation*/
+.navbar{
+	font-family: "Gotham", Cambria, georgia, times, "times new roman", serif;
+	font-size: 0.87em;
+	text-transform: uppercase;
+	background : #007ba4;
+	padding:0px;
+}
+
+/* Spec du bouton rouge */
+.btn-outline-primary{
+	font-family: "Gotham", Cambria, georgia, times, "times new roman", serif;
+	font-size: 0.8em;
+}
+/* Spec du bouton deconnexion */
+.btn-outline-danger{
+	font-family: "Gotham", Cambria, georgia, times, "times new roman", serif;
+	font-size: 0.8em;
+}
+
+.btn-danger{
+	font-family: "Gotham", Cambria, georgia, times, "times new roman", serif;
+	font-size: 0.8em;
+	color:#fff;
+	text-transform: uppercase;
+
+}
+
+.btn-outline-secondary{
+	color: #007ba4;
+	border-color:#007ba4 ;
+}
+
+.btn-outline-secondary:hover{
+	color: #fff;
+	border-color:#fff ;
+	background-color: #007ba4;
+}
+
+/* padding des menus */
+.navbar-expand-md .navbar-nav .nav-link{
+	padding: 13px 5px 12px 5px; /*HAUT DROITE BAS GAUCHE*/
+}
+
+/* Souris au dessus des menu de la case */
+.navbar li:hover{
+	background-color : #ecf0f1;
+}
+/* Souris au dessus des menu du texte */
+.navbar-dark .navbar-nav .active > .nav-link:hover{
+	color:#333;
+}
+/* Souris au dessus du bouton déconnexion */
+.btn-outline-danger:hover{
+	color:#333;
+}
+
+
+/*Les "div" table annuaires*/
+#table{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.table-wrapper-scroll-y {
+	display: block;
+	max-height: 350px;
+	overflow-y: auto;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+
+#contenue{ 
+	width:95%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom:60px;
+}
+
+/*les entetes des tables*/
+.table th{
+	font-family: "Gotham", Cambria, georgia, times, "times new roman", serif;
+	font-size: 0.85em;
+	background-color:#007ba4;
+	color:#fff;
+	text-align: center;
+	padding:0;
+	margin:1px;
+}
+
+button[id="search"],
+button[id="searchSelection"]{
+	margin:5px;
+	float:right;
+}
+
+
+label{
+	margin-bottom:0px;
+	padding-left:0px;
+}
+
+.connexion img{
+	width:100%;
+}
+.connexion{
+	border-radius:1px;
+	background:#fff;
+	padding:0% 15% 15% 15%;
+	margin-top:10%;
+}
+
+.connexion h6,h3{
+	text-align:center;
+}
+
+#div_autre{
+	display:none;
+}
+
+footer{
+	background-color: #999;
+	position:fixed;
+	padding-bottom:40px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 35px;
+	text-align: center;
+	color: #FFF;
+}
+
+footer p {
+    padding: 10.5px;
+    margin: 0px;
+    line-height: 100%;
+}
+
+footer a {
+    color: #fff;
+}
+footer a:hover {
+    color: #000;
+}
