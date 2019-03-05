@@ -12,7 +12,9 @@ body{
 	font: normal 112.5%/1.5 "corbel", Arial, "Helvetica Neue", Helvetica, "Bitstream Vera Sans", sans-serif;
 	background-color: #ecf0f1;
 	color: #000;
-	max-width:100%
+	max-width:100%;
+	width:auto;
+	min-width:700px;
 }
 
 h1{
@@ -88,21 +90,7 @@ h1{
 #table{
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.table-wrapper-scroll-y {
-	display: block;
-	max-height: 350px;
-	overflow-y: auto;
-	-ms-overflow-style: -ms-autohiding-scrollbar;
-}
-
-
-#contenue{ 
-	width:95%;
-	margin-left: auto;
-	margin-right: auto;
-	padding-bottom:60px;
+	width:auto;
 }
 
 /*les entetes des tables*/
@@ -112,16 +100,44 @@ h1{
 	background-color:#007ba4;
 	color:#fff;
 	text-align: center;
-	padding:0;
-	margin:1px;
 }
+
+.table-fixed thead {
+  width: 99.5%;
+}
+.table-fixed tbody {
+	height:auto;
+	max-height: 350px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	scrollbar-width: thin;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+
+#contenue{ 
+	overflow: auto;
+	width:95%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom:60px;
+}
+
+
 
 button[id="search"],
 button[id="searchSelection"]{
 	margin:5px;
 	float:right;
 }
-
 
 label{
 	margin-bottom:0px;
@@ -146,27 +162,7 @@ label{
 	display:none;
 }
 
-footer{
-	background-color: #999;
-	position:fixed;
-	padding-bottom:40px;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 35px;
-	text-align: center;
-	color: #FFF;
-}
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-
-footer a {
-    color: #fff;
-}
-footer a:hover {
-    color: #000;
+.btn-right{
+	float:right;
 }

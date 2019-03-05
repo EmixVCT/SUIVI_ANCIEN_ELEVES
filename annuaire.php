@@ -89,7 +89,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 			</div>
 		</form>
 		
-		<br/><br/><br/>
+		<br/><br/>
 		<div id='table'></div>
 		<div id='modifEtu'></div>
 

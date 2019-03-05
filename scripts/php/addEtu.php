@@ -17,19 +17,12 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 			$req .= "formation";
 			$n++;
 		}
-		if(!empty($_POST['lieu_poursuite'])){
+		if(!empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite'])){
 			if ($n != 0){$req .= ", ";}
-			$req .= "lieu_poursuite";
-			$n++;
-		}
-		if(!empty($_POST['formation_poursuite'])){
-			if ($n != 0){$req .= ", ";}
-			$req .= "formation_poursuite";
-			$n++;
-		}
-		if(!empty($_POST['type_poursuite'])){
-			if ($n != 0){$req .= ", ";}
+			$req .= "lieu_poursuite,";
+			$req .= "formation_poursuite,";
 			$req .= "type_poursuite";
+			$n++;
 		}
 		$req .= ') VALUES ( ';
 		
@@ -43,26 +36,18 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 			$req .= "'".$_POST['formation']."'";
 			$n++;
 		}
-		if(!empty($_POST['lieu_poursuite'])){
+		if(!empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite'])){
 			if ($n != 0){$req .= ", ";}
-			$req .= "'".$_POST['lieu_poursuite']."'";
-			$n++;
-		}
-		if(!empty($_POST['formation_poursuite'])){
-			if ($n != 0){$req .= ", ";}
-			$req .= "'".$_POST['formation_poursuite']."'";
-			$n++;
-		}
-		if(!empty($_POST['type_poursuite'])){
-			if ($n != 0){$req .= ", ";}
+			$req .= "'".$_POST['lieu_poursuite']."',";
+			$req .= "'".$_POST['formation_poursuite']."',";
 			$req .= "'".$_POST['type_poursuite']."'";
+			$n++;
 		}
 		
 		$req .= ")";
 		mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 	}
-	
-	//recupération de l'id crée
+	//recupération de l'id crée	
 	$req = "SELECT max(id) FROM info";
 	foreach (mysqli_query($connexion,$req) as $row){
 		$idRequete = $row['max(id)'];
@@ -103,7 +88,6 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 		}
 		
 		$req .= ",".$idRequete.")";
-		
 		mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 	}
 	
@@ -113,7 +97,7 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 }else{
 ?>
 
-
+<br/><br/><br/>
 <h4>Ajouter un étudiant : </h4>
 	
 <form name="ajouter" >
@@ -188,11 +172,17 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 		</div>
 	</div>
 </form>
-	<div class='row'>	
-		<div class="col-md-12">
-			<input class='btn btn-outline-primary' type="button" name='add' value='Ajouter' onclick='validerAjout()'/>
-		</div>	
+	
+	
+<!-- Button -->
+<div class="row">
+	<div class="col-6">
+		<input class='btn btn-outline-primary' type="button" name='add' value='Ajouter' onclick='validerAjout()'/>
 	</div>
+	<div class="col-6">
+		<input type='button' class="btn btn-outline-danger btn-right" name='supp' value='Retour' onclick='clearZone()'/>
+	</div>
+</div>
 <?php
 }
 ?>

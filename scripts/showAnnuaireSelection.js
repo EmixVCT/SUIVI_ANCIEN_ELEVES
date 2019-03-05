@@ -14,7 +14,8 @@ function initPage(){
 	var searchInput = document.getElementById("input_promo");
 	addListenerMulti(searchInput, "change keydown paste input",function (event) {show_table_trie_selection();} );
 	
-	
+	document.getElementById("EtuSansPoursuite").onchange = show_table_trie_selection;
+
 	document.getElementById("trie").onchange = show_table_trie_selection;
 	show_table_trie_selection();
 }
@@ -42,7 +43,12 @@ function show_table_trie_selection(){
 			}
 		}
 	}
-		
+	if (document.getElementById("EtuSansPoursuite").checked == true){
+		stringSend += "&check=ok";
+	}
+	
+	
+	console.log(stringSend);	
 	xhrAfficher.open("POST","scripts/php/getAnnuaireTrieSelection.php",true);
 	xhrAfficher.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 	xhrAfficher.send(stringSend);

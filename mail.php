@@ -8,7 +8,6 @@ if (!estConnecte() || ( $_SESSION['droit'] != "user" && $_SESSION['droit'] != "a
     exit;
 }
 
-
 //Si on clique sur le bouton destinataire	
 if(isset($_POST['dst']) and $_POST['dst'] == 'Destinataire'){
 	if (isset($_POST['src'])){
@@ -25,7 +24,7 @@ if(isset($_POST['dst']) and $_POST['dst'] == 'Destinataire'){
 	exit();
 
 //clique sur le bouton "Retirer dst"
-}else if(isset($_POST['suppdst']) and $_POST['suppdst'] == 'Retirer dst' and !empty($_SESSION['dst'])){
+}else if(isset($_POST['suppdst']) and $_POST['suppdst'] == 'Retirer destinataire'){
 	unset($_SESSION['dst']);
 	
 //Efface tout les champs
@@ -150,6 +149,7 @@ function getEmail($listEtu,$cnx){
 		}
 		$i++;
 	}
+		
 	$resultat = mysqli_query($cnx,$requete);
 	while ($l = mysqli_fetch_row($resultat)) {	
 		foreach($l as $val){
@@ -183,24 +183,22 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 								<input class="btn btn-outline-secondary" type="submit" name ="dst" value="Destinataire">
 								<input class="btn btn-outline-secondary" type="submit" name ="suppdst" value="Retirer destinataire">
 							</div>
-							<input type="text" class="form-control" placeholder="Aucun destinataire" <?php
-								if(isset($_POST['etu'])){
-									$_SESSION['dst'] = getEmail($_POST['etu'],$connexion);
-									echo "value='";
-									foreach($_SESSION['dst'] as $v){
-										echo $v.";";
-									}		
-									echo "'";
-								}else if(isset($_SESSION['dst']) and !empty($_SESSION['dst'])){
-									echo "value='";
-									foreach($_SESSION['dst'] as $v){
-										echo $v.";";
-									}
-									echo "'";
-								}else{
-									$_SESSION['dst'] = Array();
+							<?php
+							$list_dst = "";
+							if(isset($_POST['etu'])){ //la selection a été faite
+								$_SESSION['dst'] = getEmail($_POST['etu'],$connexion);
+								foreach($_SESSION['dst'] as $v){
+									$list_dst .= $v.";";
+								}		
+							}else if(isset($_SESSION['dst']) and !empty($_SESSION['dst'])){
+								foreach($_SESSION['dst'] as $v){
+									$list_dst .= $v.";";
 								}
-								?> readonly>
+							}else{
+								$_SESSION['dst'] = Array();
+							}
+							?>
+							<input type="text" class="form-control" placeholder="Aucun destinataire" value=<?php echo "'".$list_dst."'";?> readonly>
 						</div>
 
 						<div class="form-group">

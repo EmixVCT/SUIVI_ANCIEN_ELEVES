@@ -18,11 +18,12 @@ function initPage(){
 	document.getElementById("trie").onchange = show_table_trie;
 	show_table_trie();
 }
-
+/*FONCTION QUI MET A LECOUTE*/
 function addListenerMulti(el, s, fn) {
 	s.split(' ').forEach(e => el.addEventListener(e, fn, false));
 }
 
+/*AFFICHE LA TABLE TRIER*/
 function show_table_trie(){
 	xhrAfficher = new XMLHttpRequest();
 	xhrAfficher.onreadystatechange = function() {
@@ -48,7 +49,26 @@ function show_table_trie(){
 	xhrAfficher.send(stringSend);
 }
 
+
+/* FONCTIONS DE SUPPRESSION */
 function supprimerLig(id,cond,tab){
+	entete = "id="+id; 
+	entete += "&cond="+cond;
+	entete += "&tab=" +tab; 
+	
+	xhrConf = new XMLHttpRequest();
+	xhrConf.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("modifEtu").innerHTML = this.responseText;
+			var elmnt = document.getElementById("modifEtu");
+			elmnt.scrollIntoView();
+		}
+	};
+	xhrConf.open("POST","scripts/php/confirmation.php",true);
+	xhrConf.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhrConf.send(entete);	
+}
+function ValiderSupprimerLig(id,cond,tab){
 	entete = "id="+id; 
 	entete += "&cond="+cond;
 	entete += "&tab=" +tab; 
@@ -67,15 +87,18 @@ function supprimerLig(id,cond,tab){
 	
 }
 
-
+/* FONCTIONS DE MODIFICATION */
 function modifierEtu(id){
 	entete = "id="+id; 
 	
 	xhrMod = new XMLHttpRequest();
 	xhrMod.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
+
 			document.getElementById("modifEtu").innerHTML = this.responseText;
-		}
+			var elmnt = document.getElementById("modifEtu");
+			elmnt.scrollIntoView();
+			}
 	};
 
 	xhrMod.open("POST","scripts/php/modifEtu.php",true);
@@ -112,11 +135,14 @@ function validerModif(id){
 	
 }
 
+/* FONCTIONS D'AJOUT */
 function ajoutEtu(){
 	xhrAdd = new XMLHttpRequest();
 	xhrAdd.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			document.getElementById("modifEtu").innerHTML = this.responseText;
+			var elmnt = document.getElementById("modifEtu");
+			elmnt.scrollIntoView();
 		}
 	};
 
@@ -162,8 +188,33 @@ function validerAjout(){
 	
 }
 
+/* FONCTIONS D'AFFICHAGE */
+function informationEtu(id){
+	entete = "id="+id; 
+	
+	xhrInf = new XMLHttpRequest();
+	xhrInf.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+
+			document.getElementById("modifEtu").innerHTML = this.responseText;
+			var elmnt = document.getElementById("modifEtu");
+			elmnt.scrollIntoView();
+			}
+	};
+
+	xhrInf.open("POST","scripts/php/getInfoEtu.php",true);
+	xhrInf.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhrInf.send(entete);
+}
+
+function clearZone(){
+	document.getElementById("modifEtu").innerHTML = "";
+	var elmnt = document.getElementById("table");
+	elmnt.scrollIntoView();
+}
 
 
+/* FONCTIONS TECHNIQUE */
 function empty(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key))

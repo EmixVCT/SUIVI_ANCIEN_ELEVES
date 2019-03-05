@@ -42,7 +42,12 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 							<option value='promotion'>Promotion</option>
 							<option value='formation'>Formation</option>
 						</select>
-					</div>				
+					</div>
+				</div>
+				<div class='col-sm-12 col-md-6 col-lg-6'>
+					<div class="checkbox">
+					  <label><input type="checkbox" id="EtuSansPoursuite"/> Etudiants n'ayant pas répondu à l'enquête de poursuite d'étude</label>
+					</div>
 				</div>
 			</div>
 			<!-- Formulaire recherche -->

@@ -14,23 +14,21 @@ if (isset($_POST['OK'])){
 			$req .= 'formation = "'.$_POST['formation'].'" ';
 			$n++;
 		}
-		if(!empty($_POST['lieu_poursuite'])){
+		if(!empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite'])){
 			if ($n != 0){$req .= ", ";}
-			$req .= 'lieu_poursuite = "'.$_POST['lieu_poursuite'].'" ';
-			$n++;
-		}
-		if(!empty($_POST['formation_poursuite'])){
-			if ($n != 0){$req .= ", ";}
-			$req .= 'formation_poursuite = "'.$_POST['formation_poursuite'].'" ';
-			$n++;
-		}
-		if(!empty($_POST['type_poursuite'])){
-			if ($n != 0){$req .= ", ";}
+			$req .= 'lieu_poursuite = "'.$_POST['lieu_poursuite'].'", ';
+			$req .= 'formation_poursuite = "'.$_POST['formation_poursuite'].'", ';
 			$req .= "type_poursuite = '".$_POST['type_poursuite']."' ";
+			$n++;
+		}else if(empty($_POST['formation_poursuite']) || empty($_POST['lieu_poursuite']) || empty($_POST['type_poursuite'])){
+			if ($n != 0){$req .= ", ";}
+			$req .= 'lieu_poursuite = NULL, ';
+			$req .= 'formation_poursuite = NULL, ';
+			$req .= 'type_poursuite = NULL';
 		}
 		
-		$req .= "WHERE id = ".$_POST['id'];
-		
+		$req .= " WHERE id = ".$_POST['id'];
+
 		mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 	}
 	
@@ -52,7 +50,6 @@ if (isset($_POST['OK'])){
 		}
 		
 		$req .= "WHERE id = ".$_POST['id'];
-		
 		mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 	}
 	
@@ -72,7 +69,7 @@ if (isset($_POST['OK'])){
 	}
 ?>
 
-
+<br/><br/><br/>
 <h4>Modification : </h4>
 <form name="modification" >
 	<div class="form-group">
@@ -80,13 +77,13 @@ if (isset($_POST['OK'])){
 			<div class="col-md-6">
 				<label class="control-label" for="prenom">Prénom</label>  
 				<input id="prenom" name="prenom" type="text" placeholder="" class="form-control input-md" 
-				<?php if (isset($lig['prenom'])){echo "value=".$lig['prenom'];} ?> >
+				<?php if (isset($lig['prenom'])){echo "value=\"".$lig['prenom']."\"";} ?> >
 			</div>
 			
 			<div class="col-md-6">
 				<label class="control-label" for="nom">Nom</label>  
 				<input id="nom" name="nom" type="text" placeholder="" class="form-control input-md"
-				<?php if (isset($lig['nom'])){echo "value=".$lig['nom'];} ?> >
+				<?php if (isset($lig['nom'])){echo "value=\"".$lig['nom']."\"";} ?> >
 			</div>	
 		</div>
 		
@@ -94,12 +91,12 @@ if (isset($_POST['OK'])){
 			<div class="col-md-6">
 				<label class="control-label" for="formation">Formation </label> 
 				<input id="formation" name="formation" type="text" placeholder="" class="form-control input-md"
-				<?php if (isset($lig['formation'])){echo "value=".$lig['formation'];} ?> >
+				<?php if (isset($lig['formation'])){echo "value=\"".$lig['formation']."\"";} ?> >
 			</div>		
 			<div class="col-md-6">
 				<label class="control-label" for="promotion">Promotion</label>  
 				<input id="promotion" name="promotion" type="text" placeholder="" class="form-control input-md"
-				<?php if (isset($lig['promotion'])){echo "value=".$lig['promotion'];} ?> >
+				<?php if (isset($lig['promotion'])){echo "value=\"".$lig['promotion']."\"";} ?> >
 			</div>
 
 		</div>
@@ -108,25 +105,28 @@ if (isset($_POST['OK'])){
 			<div class="col-md-12">
 				<label class="control-label" for="mail">Adresse email</label> 
 				<input id="mail" name="mail" type="email" placeholder="xxx@xxx.x" class="form-control input-md"
-				<?php if (isset($lig['mail'])){echo "value=".$lig['mail'];} ?> >
+				<?php if (isset($lig['mail'])){echo "value=\"".$lig['mail']."\"";} ?> >
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-md-4">		
 				<label class="control-label" for="formation_poursuite">Formation poursuite</label>
-				<?php
-				$liste_formation = Array("Ecole d'ingenieur","Miage","L3","Licence professionnelle","Bachelor","Aucune");
-				?>
 				<select class="custom-select" name="formation_poursuite" id="formation_poursuite" required>
 					<option value=""<?php if(empty($lig['formation_poursuite'])){echo "selected";} ?>>N/A</option>
 					<option value="Ecole d'ingenieur" <?php if($lig['formation_poursuite'] == $formations_p[0]){echo "selected";} ?>> École d'ingénieur</option>
 					<option value="Miage"<?php if($lig['formation_poursuite'] == $formations_p[1]){echo "selected";} ?>> MIAGE</option>
 					<option value="L3"<?php if($lig['formation_poursuite'] == $formations_p[2]){echo "selected";} ?>> L3 </option>
 					<option value="Licence professionnelle"<?php if($lig['formation_poursuite'] == $formations_p[3]){echo "selected";} ?>> Licence professionnelle</option>
-					<option value="Bachelor"<?php if($lig['formation_poursuite'] == "Bachelor"){echo $formations_p[4];} ?>> Bachelor </option>
+					<option value="Bachelor"<?php if($lig['formation_poursuite'] == $formations_p[4]){echo "selected";} ?>> Bachelor </option>
 					<option value="Aucune"<?php if($lig['formation_poursuite'] == $formations_p[5]){echo "selected";} ?>> Aucune</option>
-					<option id="autre" value="Autre" <?php if (!in_array($lig['formation_poursuite'],$formations_p)){echo "selected";} ?> > Autre..</option>
+					<?php
+						if (!empty($lig['formation_poursuite']) && !in_array($lig['formation_poursuite'],$formations_p)){
+							echo '<option value=\''.$lig['formation_poursuite'].'\' selected >'.$lig['formation_poursuite'].'</option>';
+						}else{
+							echo '<option id="autre" value="Autre" > Autre..</option>';
+						}
+					?>
 				</select>				
 				<!--<input id="formation_poursuite" name="formation_poursuite" type="text" placeholder="" class="form-control input-md">-->
 			</div>
@@ -134,9 +134,9 @@ if (isset($_POST['OK'])){
 			<div class="col-md-4">	
 				<label class="control-label" for="type_poursuite">Type poursuite</label>  
 				<select class="custom-select" name="type_poursuite" id="type_poursuite" required>
-					<option value="">N/A</option>
-					<option value="initiale">Initial</option>
-					<option value="alternance">Alternance</option>
+					<option value=""<?php if(empty($lig['type_poursuite'])){echo "selected";} ?>>N/A</option>
+					<option value="initiale"<?php if($lig['type_poursuite']=="initiale"){echo "selected";} ?>>Initial</option>
+					<option value="alternance"<?php if($lig['type_poursuite']=="alternance"){echo "selected";} ?>>Alternance</option>
 				</select>
 				<!--<input id="type_poursuite" name="type_poursuite" type="text" placeholder="Alternance ou Initial" class="form-control input-md">-->
 			</div>
@@ -144,15 +144,20 @@ if (isset($_POST['OK'])){
 			<div class="col-md-4">
 				<label class="control-label" for="lieu_poursuite">Lieu poursuite</label>
 				<input id="lieu_poursuite" name="lieu_poursuite" type="text" placeholder="ville / département" class="form-control input-md"
-				<?php if (isset($lig['lieu_poursuite']) && !empty($lig["lieu_poursuite"])){echo "value=".$lig['lieu_poursuite'];} ?> >
+				<?php if (isset($lig['lieu_poursuite']) && !empty($lig["lieu_poursuite"])){echo "value=\"".$lig['lieu_poursuite']."\"";} ?> >
 			</div>
 		</div>
 	</div>
 </form>
 
 <!-- Button -->
-<div class="col-xs-1 col-sm-6 col-md-4 col-lg-4">
-	<input class="btn btn-outline-primary" name='modifier' type="button" value="modifier" onclick='validerModif("<?php echo $_POST['id'] ?>")'/>
+<div class="row">
+	<div class="col-6">
+		<input class="btn btn-outline-primary" name='modifier' type="button" value="modifier" onclick='validerModif("<?php echo $_POST['id'] ?>")'/>
+	</div>
+	<div class="col-6">
+		<input class="btn btn-outline-danger btn-right" name='annuler' type="button" value="annuler" onclick='informationEtu("<?php echo $_POST['id'] ?>")'/>
+	</div>
 </div>
 
 
