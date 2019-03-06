@@ -184,10 +184,84 @@ function validerAjout(){
 
 	xhrAdd.open("POST","scripts/php/addEtu.php",true);
 	xhrAdd.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	xhrAdd.send(entete);
-	
+	xhrAdd.send(entete);	
 }
 
+function ajoutEtuCsv(){
+	xhrAddCsv = new XMLHttpRequest();
+	xhrAddCsv.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("modifEtu").innerHTML = this.responseText;
+			var elmnt = document.getElementById("modifEtu");
+			elmnt.scrollIntoView();
+		}
+	};
+
+	xhrAddCsv.open("POST","scripts/php/addEtuCsv.php",true);
+	xhrAddCsv.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhrAddCsv.send();
+}
+
+function validerImportation(){
+	elemFormA = document.getElementsByName("ajouterCsv")[0];
+	file_accept = ["application/vnd.ms-excel","csv"];
+	
+	formData = new FormData();	
+	valide = false
+	for (i=0;i != elemFormA.length;i++){
+		if (elemFormA[i].value != null){
+			if (elemFormA[i].name == "file" && !empty(elemFormA[i].value)){
+
+				for(var y = 0; y < file_accept.length; y++) {
+					if(elemFormA[i].files[0].type === file_accept[y]) {
+						formData.append("OK","OK");
+						formData.append(elemFormA[i].name,elemFormA[i].files[0]);
+						valide = true;
+					}
+				}
+				if (!valide){
+					//mauvais format de fichier
+					formData.append("NON","NON");
+				}
+			}else{
+				formData.append(elemFormA[i].name,elemFormA[i].value);
+			}
+		}
+	}
+	
+	xhrAddCsv = new XMLHttpRequest();
+	xhrAddCsv.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("modifEtu").innerHTML = this.responseText;
+			var elmnt = document.getElementById("modifEtu");
+			elmnt.scrollIntoView();
+		}
+	};
+	
+	console.log(formData);
+	xhrAddCsv.open("POST","scripts/php/addEtuCsv.php",true);
+	xhrAddCsv.send(formData);	
+}
+/*
+function CsvToBdd(entete,data){
+	console.log(entete);
+	console.log(data);
+	
+	formData = new FormData();
+	
+	xhrAddToBdd = new XMLHttpRequest();
+	xhrAddToBdd.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("modifEtu").innerHTML = this.responseText;
+			show_table_trie();
+		}
+	};
+	
+	xhrAddToBdd.open("POST","scripts/php/addEtuCsv.php",true);
+	xhrAddToBdd.send(formData);
+	
+}
+*/
 /* FONCTIONS D'AFFICHAGE */
 function informationEtu(id){
 	entete = "id="+id; 

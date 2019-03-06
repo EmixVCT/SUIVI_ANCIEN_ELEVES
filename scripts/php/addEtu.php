@@ -95,8 +95,7 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 	}
 }else{
 ?>
-
-<br/><br/><br/>
+<hr>
 <h4>Ajouter un étudiant : </h4>
 	
 <form name="ajouter" >

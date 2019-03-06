@@ -22,7 +22,7 @@ else{
 }
 
 ?>
-<br/><br/><br/>
+<hr>
 <div class="form-control-feedback alert alert-info alert-dismissible fade show" role="alert">
 
 	<span class="text-info align-middle">

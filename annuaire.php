@@ -91,11 +91,12 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 		
 		<br/><br/>
 		<div id='table'></div>
+		
 		<div id='modifEtu'></div>
 
 
-		<br/><h4>Ajouter étudiant :</h4>
-		<input type='button' name='addcsv' value='Importer CSV' class='btn btn-outline-secondary'/>
+		<hr><br/><h4>Ajouter étudiant :</h4>
+		<input type='button' name='addcsv' value='Importer CSV' onclick='ajoutEtuCsv()' class='btn btn-outline-secondary'/>
 		<input type='button' name='addform' value='Ajouter manuellement' onclick='ajoutEtu()' class='btn btn-outline-secondary'/>
 	</div>
 </body>

@@ -72,8 +72,7 @@ if (isset($_POST['OK'])){
 		}
 	}
 ?>
-
-<br/><br/><br/>
+<hr>
 <h4>Modification : </h4>
 <form name="modification" >
 	<div class="form-group">

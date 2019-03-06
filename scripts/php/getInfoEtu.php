@@ -15,8 +15,7 @@ if ($res = mysqli_query($connexion,$requete)){ //test si la commande est bien ex
 	}
 }
 ?>
-
-<br/><br/><br/>
+<hr>
 <h4>Information : <?php if (isset($lig['prenom'])){echo $lig['prenom'];} ?></h4>
 <form name="modification" >
 	<div class="form-group">

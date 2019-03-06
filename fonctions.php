@@ -44,6 +44,7 @@
             <span class="text-success align-middle">
                 <i class="fa fa-close"></i><strong> Succès :</strong> <?php echo $message; ?>
             </span>
+			</div>
 
         <?php
     }
@@ -87,6 +88,17 @@
 		echo "<pre>";
 		print_r($x);
 		echo "</pre>";
+	}
+	
+	function array_empty($a){
+		$res = false;
+		
+		foreach($a as $k => $v){
+			if(empty($v)){
+				$res = true;
+			}
+		}
+		return $res;
 	}
 
 ?>
