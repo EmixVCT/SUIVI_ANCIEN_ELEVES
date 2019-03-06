@@ -54,7 +54,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 			
 			<div class='row'>
 					
-				<div class='col-sm-12 col-md-6 col-lg-6'>
+				<div class='col-6'>
 					<div class="input-group mb-1">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="nom_input">Nom</span>
@@ -62,7 +62,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 						<input type="text" class="form-control" aria-describedby="nom_input" name='nom' id="input_nom">
 					</div>
 				</div>
-				<div class='col-sm-12 col-md-6 col-lg-6'>
+				<div class='col-6'>
 					<div class="input-group mb-1">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="prenom_input">Prénom   </span>
@@ -70,7 +70,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 						<input type="text" class="form-control" aria-describedby="prenom_input" name='prenom' id="input_prenom">
 					</div>
 				</div>
-				<div class='col-sm-12 col-md-6 col-lg-6'>
+				<div class='col-6'>
 					<div class="input-group mb-1">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="promo_input">Promotion</span>
@@ -78,7 +78,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 						<input type="text" class="form-control" aria-describedby="promo_input" name='promo' id="input_promo">
 					</div>
 				</div>
-				<div class='col-sm-12 col-md-6 col-lg-6'>
+				<div class='col-6'>
 					<div class="input-group mb-1">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="formation_input">Formation</span>

@@ -77,10 +77,16 @@ require_once('../config.php'); #On inclut la configuration
 				
 				<?php
 			}else{ //sinon
+				
 				?>
 				<header>
 					<center><h1>Enquête des anciens étudiants</h1></center>
 				</header>
+				<?php
+				if (isset($_GET['erreur']) and dec_enc("decrypt",$_GET['erreur']) == "doublons"){
+					afficherErreur("Mail deja utilisez par un autre étudiant. Veuillez entrez une autre addresse email");
+				}
+				?>
 				</br>
 				<form id="formulaire" action=<?php echo "action_formulaire.php?q=".$_GET['q']; ?> method="POST">	
 					<div class="form-row">
@@ -153,7 +159,7 @@ require_once('../config.php'); #On inclut la configuration
 					</div>
 					
 					<div class="form-group">
-						<label for="email">Adresse Email :</label>
+						<label for="email">Changer d'adresse Email :</label>
 						<input type="email" class="form-control" name="email" id="email" placeholder="ex:abc@mail.com">
 					</div>
 				

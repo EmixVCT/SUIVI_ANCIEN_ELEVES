@@ -1,6 +1,4 @@
 <?php 
-    require_once("config.php");
-	
     function afficherErreur($erreur) { //Affiche une alerte d'erreur
         ?>
         
@@ -18,7 +16,23 @@
 
         <?php
     }
-    
+	
+    function verifieDoublonsMail($m,$con) { //renvoie vrai s'il n'existe pas de mail identique dans la base de donnée
+		//récupère l'identifiant lié au mail
+		$sql = "SELECT id FROM annuaire where mail like '".$m."'";
+
+		$resultat=mysqli_query($con,$sql);
+
+		$rowcount=mysqli_num_rows($resultat);
+		
+		if ($rowcount == 0) { //test si on a un resultat
+			return True; 
+		}else{ 
+			return False;
+		}
+
+    }
+	
     function afficherSucces($message) { //Affiche une alerte de succès
         ?>
 
@@ -66,7 +80,7 @@
 		else if( $action == 'decrypt' ){
 			$output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
 		}
-	 
+		
 		return $output;
 	}
 	function debug($x){

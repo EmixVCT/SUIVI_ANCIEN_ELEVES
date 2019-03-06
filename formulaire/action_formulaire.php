@@ -22,63 +22,74 @@ require_once('../config.php'); #On inclut la configuration
 		<div id='contenue' class='container-fluid'>
 			<?php
 				//décrypt le mail dans l'url
-				$mail = dec_enc('decrypt',$_GET['q']);
-				
-				//récupère l'identifiant lié au mail
-				$sql = "SELECT id,nom,prenom FROM annuaire where mail like '".$mail."'";
-				$resultat=mysqli_query($connexion,$sql);
-				
-				while ($ligne=mysqli_fetch_row($resultat)) {
-					$id = $ligne[0];
-					$etudiant = $ligne[2]." ".$ligne[1];
-				}
-				
-				//si l'identifiant a été trouver et que l'on a appuyer sur envoyer
-				if(isset($id) and isset($_POST['envoyer']) AND $_POST['envoyer'] == 'Envoyer'){
+				if (isset($_GET['q'])){
+					$mail = dec_enc('decrypt',$_GET['q']);
+
+					//récupère l'identifiant lié au mail
+					$sql = "SELECT id,nom,prenom FROM annuaire where mail like '".$mail."'";
+					$resultat=mysqli_query($connexion,$sql);
 					
-					//si l'etudiant est en poursuite d'étude
-					if (isset($_POST['Poursuite']) and $_POST['Poursuite'] == 'Oui'){
-						//ajout les donnée a la base
-						if ($_POST['formation'] == "Autre"){
-							$formationPost = $_POST['autreform'];
-						}else{
-							$formationPost = $_POST['formation'];
-						}
-						$req = 'UPDATE info set formation_poursuite = "'.$formationPost.'" , lieu_poursuite = "'.$_POST['lieu'].' / '.$_POST['codeP'].'" , type_poursuite = "'.$_POST['type_formation'].'" ';
-						$req .= "WHERE id = ".$id;
-						mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
-					//sinon	
-					}else{
-						$req = "UPDATE info set formation_poursuite = 'Aucune' WHERE id = ".$id;
-						mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
+					while ($ligne=mysqli_fetch_row($resultat)) {
+						$id = $ligne[0];
+						$etudiant = $ligne[2]." ".$ligne[1];
 					}
-					
-					//si l'etudiant accepte d'etre dans l'annuaire
-					if (isset($_POST['inscription']) and $_POST['inscription'] == 'oui'){
-						//si il change d'adresse mail
-						if (isset($_POST['email']) and !empty($_POST['email']) and $_POST['email'] != $mail){
-							$req = "UPDATE annuaire set mail = '".$_POST['email']."' WHERE id = ".$id;
+					//si l'identifiant a été trouver et que l'on a appuyer sur envoyer
+					if(isset($id) and isset($_POST['envoyer']) AND $_POST['envoyer'] == 'Envoyer'){
+						
+						//si l'etudiant accepte d'être dans l'annuaire
+						if (isset($_POST['inscription']) and $_POST['inscription'] == 'oui'){
+							//si l'adresse mail est definie et differente
+							if (isset($_POST['email']) and !empty($_POST['email']) and $_POST['email'] != $mail){
+								//vérifie qu'il n'est pas deja attribué
+								if (verifieDoublonsMail($_POST['email'],$connexion)){
+									$req = "UPDATE annuaire set mail = '".$_POST['email']."' WHERE id = ".$id;
+									mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
+								}else{//redirige et lui affiche une erreur
+									header('location: enquete.php?q='.$_GET['q'].'&erreur='.dec_enc("encrypt","doublons"));
+									exit();
+								}
+							}
+						//sinon	
+						}else{
+							$req = "DELETE from annuaire WHERE id = ".$id;
 							mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 						}
-					//sinon	
+						
+						//si l'etudiant est en poursuite d'étude
+						if (isset($_POST['Poursuite']) and $_POST['Poursuite'] == 'Oui'){
+							//ajout les donnée a la base
+							if ($_POST['formation'] == "Autre"){
+								$formationPost = $_POST['autreform'];
+							}else{
+								$formationPost = $_POST['formation'];
+							}
+							$req = 'UPDATE info set formation_poursuite = "'.$formationPost.'" , lieu_poursuite = "'.$_POST['lieu'].' / '.$_POST['codeP'].'" , type_poursuite = "'.$_POST['type_formation'].'" ';
+							$req .= "WHERE id = ".$id;
+							mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
+						//sinon	
+						}else{
+							$req = "UPDATE info set formation_poursuite = 'Aucune' WHERE id = ".$id;
+							mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
+						}
+						
+						
+						echo '<h1>Merci '.$etudiant.' !</h1><br/> <h4>Vos réponses ont été transmise, merci de votre temps ! </h4>'; 
+						
+						//remplis le fichier avec les actions
+						$file = fopen ("../historique/actions.txt", "a");
+						date_default_timezone_set('Europe/Paris');
+						$txt = "[".date("d/m/y à H\hi")."] ";
+						$txt .= $etudiant." a répondu à l'enquête";
+						$txt .= "\r\n";
+						
+						fputs ($file, $txt);
+						fclose ($file);
+						
 					}else{
-						$req = "DELETE from annuaire WHERE id = ".$id;
-						mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
+						echo '<h4>Nous avons rencontré une erreur merci de bien vouloir réessayer ! </h4>';  
 					}
-					echo '<h1>Merci '.$etudiant.' !</h1><br/> <h4>Vos réponses ont été transmise, merci de votre temps ! </h4>'; 
-					
-					//remplis le fichier avec les actions
-					$file = fopen ("../historique/actions.txt", "a");
-					date_default_timezone_set('Europe/Paris');
-					$txt = "[".date("d/m/y à H\hi")."] ";
-					$txt .= $etudiant." a répondu à l'enquête";
-					$txt .= "\r\n";
-					
-					fputs ($file, $txt);
-					fclose ($file);
-					
 				}else{
-					echo '<h4>Nous avons rencontré une erreur merci de bien vouloir réessayer ! </h4>';  
+					echo '<h4>L\'URL est éronné, merci de bien vouloir réessayer ! </h4>';  
 				}
 			?>
 		</div>

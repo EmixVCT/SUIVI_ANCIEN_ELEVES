@@ -1,8 +1,6 @@
 <?php
     session_start(); //Permet de démarrer les sessions sur toutes les pages
-    require_once('fonctions.php');
-	
-	
+
 	//Variables globales
 	$formations_p = Array("Ecole d'ingenieur","Miage","L3","Licence professionnelle","Bachelor","Aucune","");
 	$fichiersInclude = "include/";
@@ -21,4 +19,7 @@
 	//connexion à la base de donnees
 	mysqli_select_db($connexion,$bd)
 	or die("Impossible d'accèder à la base de données");
+	
+	require_once('fonctions.php');
+
 ?>

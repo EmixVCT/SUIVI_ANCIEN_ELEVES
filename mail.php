@@ -49,10 +49,15 @@ if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 	}else{//ENVOIE DU MAIL
 		
 		$lien_desinscription = "http://localhost/p/desinscription.php";
+		$lien_enquete = "http://localhost/p/formulaire/enquete.php";
+		
 		$n = 0;
 		
 		//On envoie les mail un par un pour filtré les serveurs qui rencontrent des bogues
 		foreach($_SESSION['dst'] as $mail){
+			
+			$mail_crypt = dec_enc("encrypt",$mail);
+			
 			if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)){ // On filtre les serveurs qui rencontrent des bogues.
 				$passage_ligne = "\r\n";
 			}else{
@@ -63,9 +68,13 @@ if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 			$message_html = '<html><head><style type="text/css">#contenue{margin-left:20%;margin-right:20%}.footer{font-size: 0.8em;}</style></head>';
 			$message_html .= "<body><div id='contenue'><p>".$_POST['contenue']."</p>";
 			if (isset($_POST['lien']) and $_POST['lien']=='enquete'){
-				$message_html .= '<p>Lien vers l\'enquête :  <a href="http://localhost/p/formulaire/enquete.php?q='.dec_enc("encrypt",$mail).'">Enquête</a></p>';
+				$message_html .= '<p>Lien vers l\'enquête :  <a href="'.$lien_enquete.'?q='.$mail_crypt.'">Enquête</a></p>';
 			}
-			$message_html .= "<br/><p><i class='footer'>L’envoi de ce mail a été fait par le IUT de Vélizy, sans transmission d’aucune donnée personnelle.Conformément au Règlement Général sur la Protection des données, adoptées le 14 avril 2016, vous bénéficiez d’un droit d’effacement des données personnelles.Vous pouvez exercer vos droits et ne plus recevoir de mail de notre part en <a href='".$lien_desinscription."' >cliquant ici </a></i></p></div></body></html>";
+			$message_html .= "<br/><p><i class='footer'>L’envoi de ce mail a été fait par le IUT de Vélizy, 
+				sans transmission d’aucune donnée personnelle.Conformément au Règlement Général sur la Protection des données, 
+				adoptées le 14 avril 2016, vous bénéficiez d’un droit d’effacement des données personnelles.Vous pouvez exercer 
+				vos droits et ne plus recevoir de mail de notre part en 
+				<a href=\"".$lien_desinscription."?q=".$mail_crypt."\" >cliquant ici </a></i></p></div></body></html>";
 			//==========
 			 
 			//=====Création de la boundary

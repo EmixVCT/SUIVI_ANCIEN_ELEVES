@@ -21,13 +21,13 @@ if ($res = mysqli_query($connexion,$requete)){ //test si la commande est bien ex
 <form name="modification" >
 	<div class="form-group">
 		<div class='row'>
-			<div class="col-md-6">
+			<div class="col-6">
 				<label class="control-label" for="prenom">Prénom</label>  
 				<input id="prenom" name="prenom" type="text" placeholder="" class="form-control input-md" 
 				<?php if (isset($lig['prenom'])){echo "value=\"".$lig['prenom']."\"";} ?> readonly>
 			</div>
 			
-			<div class="col-md-6">
+			<div class="col-6">
 				<label class="control-label" for="nom">Nom</label>  
 				<input id="nom" name="nom" type="text" placeholder="" class="form-control input-md"
 				<?php if (isset($lig['nom'])){echo "value=\"".$lig['nom']."\"";} ?> readonly>
@@ -35,12 +35,12 @@ if ($res = mysqli_query($connexion,$requete)){ //test si la commande est bien ex
 		</div>
 		
 		<div class='row'>	
-			<div class="col-md-6">
+			<div class="col-6">
 				<label class="control-label" for="formation">Formation </label> 
 				<input id="formation" name="formation" type="text" placeholder="" class="form-control input-md"
 				<?php if (isset($lig['formation'])){echo "value=\"".$lig['formation']."\"";} ?> readonly>
 			</div>		
-			<div class="col-md-6">
+			<div class="col-6">
 				<label class="control-label" for="promotion">Promotion</label>  
 				<input id="promotion" name="promotion" type="text" placeholder="" class="form-control input-md"
 				<?php if (isset($lig['promotion'])){echo "value=\"".$lig['promotion']."\"";} ?> readonly>
@@ -49,7 +49,7 @@ if ($res = mysqli_query($connexion,$requete)){ //test si la commande est bien ex
 		</div>
 		
 		<div class='row'>
-			<div class="col-md-12">
+			<div class="col-12">
 				<label class="control-label" for="mail">Adresse email</label> 
 				<input id="mail" name="mail" type="email" placeholder="xxx@xxx.x" class="form-control input-md"
 				<?php if (isset($lig['mail'])){echo "value=\"".$lig['mail']."\"";} ?> readonly>
@@ -57,19 +57,19 @@ if ($res = mysqli_query($connexion,$requete)){ //test si la commande est bien ex
 		</div>
 		
 		<div class="row">
-			<div class="col-md-4">		
+			<div class="col-4">		
 				<label class="control-label" for="formation_poursuite">Formation poursuite</label>
 				<input id="formation_poursuite" name="formation_poursuite" type="text" placeholder="[Non renseigné]" class="form-control input-md"
 				<?php if (isset($lig['formation_poursuite'])){echo "value=\"".$lig['formation_poursuite']."\"";} ?> readonly>
 			</div>
 			
-			<div class="col-md-4">	
+			<div class="col-4">	
 				<label class="control-label" for="type_poursuite">Type poursuite</label>  
 				<input id="type_poursuite" name="type_poursuite" type="text" placeholder="[Non renseigné]" class="form-control input-md"
 				<?php if (isset($lig['type_poursuite'])){echo "value=\"".$lig['type_poursuite']."\"";} ?> readonly>
 			</div>
 			
-			<div class="col-md-4">
+			<div class="col-4">
 				<label class="control-label" for="lieu_poursuite">Lieu poursuite</label>
 				<input id="lieu_poursuite" name="lieu_poursuite" type="text" placeholder="[Non renseigné]" class="form-control input-md"
 				<?php if (isset($lig['lieu_poursuite']) && !empty($lig["lieu_poursuite"])){echo "value=\"".$lig['lieu_poursuite']."\"";} ?> readonly>

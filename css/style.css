@@ -125,10 +125,11 @@ h1{
 
 #contenue{ 
 	overflow: auto;
-	width:95%;
+	width:75%;
 	margin-left: auto;
 	margin-right: auto;
 	padding-bottom:60px;
+	min-width:700px;
 }
 
 
