@@ -122,6 +122,16 @@ h1{
   border-bottom-width: 0;
 }
 
+.tab-petit{
+	height:100%;
+	max-height: 370px;
+	width: 75%;
+	overflow: auto;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	scrollbar-width: thin;
+	margin-left: auto;
+	margin-right: auto
+}
 
 #contenue{ 
 	overflow: auto;

@@ -2,8 +2,8 @@
   
 require_once('config.php'); #On inclut la configuration
 
-#Si on arrive sur cette page alors que l'on est pas connecté / ou que l'on n'est pas un administrateur ni un utilisateur
-if (!estConnecte() || ( $_SESSION['droit'] != "user" && $_SESSION['droit'] != "admin")) { 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
     header('Location: connexion.php'); #On redirige vers la page de connexion
     exit;
 }
@@ -41,11 +41,11 @@ if(isset($_POST['dst']) and $_POST['dst'] == 'Destinataire'){
 if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 
 	if (empty($_POST['src'])){
-		echo "Vous devez entrez votre adresse email !";
+		$erreurMail = true;
 	}else if (empty($_SESSION['dst'])){
-		echo "Vous devez selectionner au moins 1 destinnataire !";
+		$erreurDestinataire = true;
 	}else if (empty($_POST['contenue'])){
-		echo "Vous devez remplir le contenue du mail !";
+		$erreurContenu = true;
 	}else{//ENVOIE DU MAIL
 		
 		$lien_desinscription = "http://localhost/p/desinscription.php";
@@ -101,7 +101,7 @@ if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 			
 			//=====Envoi de l'e-mail.
 			if (!mail($mail,$_POST['obj'],$message,$header) ){
-				echo "Une erreur est survenue lors de l'envoi du mail à ".$mail."!";
+				afficherErreur("Une erreur est survenue lors de l'envoi du mail à ".$mail."!");
 				//remplis le fichier avec les actions
 				$file = fopen ("historique/actions.txt", "a");
 				date_default_timezone_set('Europe/Paris');
@@ -181,6 +181,20 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 			<center><h1>Envoyer un mail</h1></center>
 		</header>
 		
+		<?php
+		if (isset($erreurMail) && $erreurMail){
+			afficherErreur("Vous devez entrez votre adresse email !");
+			$erreurMail = false;
+		}else if(isset($erreurDestinataire) && $erreurDestinataire){
+			afficherErreur("Vous devez selectionner au moins 1 destinnataire !");
+			$erreurDestinataire = false;
+		}else if(isset($erreurContenu) && $erreurContenu){
+			afficherErreur("Vous devez remplir le contenue du mail !");
+			$erreurContenu = false;
+		}
+		
+		
+		?>
 		<!-------------------->
 		<div class="container">
 			<div class="row justify-content-center">

@@ -1,6 +1,6 @@
 <?php
     session_start(); //Permet de démarrer les sessions sur toutes les pages
-
+	
 	//Variables globales
 	$formations_p = Array("Ecole d'ingenieur","Miage","L3","Licence professionnelle","Bachelor","Aucune","");
 	$fichiersInclude = "include/";

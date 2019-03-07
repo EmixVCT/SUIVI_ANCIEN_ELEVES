@@ -2,6 +2,12 @@
 
 include("../../config.php");
 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
+
 $requete="SELECT Annuaire.id,prenom,nom,promotion,formation FROM ANNUAIRE,INFO WHERE Annuaire.id = INFO.id ";
 
 if (!empty($_POST['nom'])){

@@ -2,6 +2,12 @@
 
 include("../../config.php");
 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
+
 echo "<div class='table-responsive table-wrapper-scroll-y table-sm table-condenced'>";
 echo "<table border = 1 class='table table-striped'>";
 

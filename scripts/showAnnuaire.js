@@ -126,6 +126,7 @@ function validerModif(id){
 		if (this.readyState == 4 && this.status == 200) {
 			document.getElementById("modifEtu").innerHTML = this.responseText;
 			show_table_trie();
+			informationEtu(id);
 		}
 	};
 

@@ -2,6 +2,11 @@
 
 include("../../config.php");
 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
 
 if (!empty($_POST['tab']) and !empty($_POST['id']) and !empty($_POST['cond'])){
 	

@@ -1,8 +1,8 @@
 <?php
 require_once('config.php'); #On inclut la configuration
 
-#Si on arrive sur cette page alors que l'on est pas connecté / ou que l'on n'est pas un administrateur ni un utilisateur
-if (!estConnecte() || ( $_SESSION['droit'] != "user" && $_SESSION['droit'] != "admin")) { 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
     header('Location: connexion.php'); #On redirige vers la page de connexion
     exit;
 }

@@ -2,6 +2,12 @@
 
 include("../../config.php");
 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
+
 $requete="SELECT Annuaire.id,prenom,nom,promotion,formation FROM ANNUAIRE,INFO WHERE Annuaire.id = INFO.id ";
 
 if (!empty($_POST['nom'])){
@@ -58,8 +64,18 @@ if (mysqli_num_rows($resultat) != 0){ ?>
 		}
 		echo "</tbody></table>"; ?>
 	</div>
-	<input class='btn btn-outline-primary' type='submit' name='selectionner' value='sélectionner'/>
-</form>
+<!-- Button -->
+<div class="row">
+	<div class="col-6">
+		<input class='btn btn-outline-primary' type='submit' name='selectionner' value='sélectionner'/>
+		</form> 
+	</div>
+	<div class="col-6">
+		<form action='mail.php' method='POST'>
+			<input class="btn btn-outline-danger btn-right" type='submit' name='retour' value='Retour'/>
+		</form>
+	</div>
+</div>
 <?php
 }
 else{

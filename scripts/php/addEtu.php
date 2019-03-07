@@ -1,9 +1,14 @@
 <?php
 include("../../config.php");
 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
 
 if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
-	if (isset($_POST['mail']) and !empty($_POST['mail']) and verifieDoublonsMail($_POST['mail'],$connexion)){
+	if (isset($_POST['mail']) and !empty($_POST['mail']) and verifieDoublonsMail("",$_POST['mail'],$connexion)){
 		
 		if(!empty($_POST['promotion']) or !empty($_POST['formation']) or !empty($_POST['lieu_poursuite']) or !empty($_POST['formation_poursuite']) or !empty($_POST['type_poursuite'])){
 			$req = "INSERT INTO info (";

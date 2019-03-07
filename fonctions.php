@@ -17,10 +17,17 @@
         <?php
     }
 	
-    function verifieDoublonsMail($m,$con) { 
+    function verifieDoublonsMail($id,$m,$con) { 
 		/*renvoie vrai s'il n'existe pas de mail identique dans la base de donnée*/
-		//récupère l'identifiant lié au mail
-		$sql = "SELECT id FROM annuaire where mail like '".$m."'";
+		
+		//récupère l'identifiant lié au mail 
+		//dans le cas ou ont ajoute un nouveau
+		if (empty($id)){
+			$sql = "SELECT id FROM annuaire where mail like '".$m."'";
+		//dans le cas ou ont modifie un existant
+		}else{
+			$sql = "SELECT id FROM annuaire where mail like '".$m."' and id != ".$id;
+		}
 
 		$resultat=mysqli_query($con,$sql);
 
@@ -49,12 +56,12 @@
 
         <?php
     }
-    function estConnecte() { //Renvoie si une personne est connectée ou non
+    function estConnecte() { //Renvoie vrai si une personne est connectée,faux sinon
         
         $roles = array("admin", "user");
-		
+		//si le login existe et si le droit existe
         if (isset($_SESSION['login']) AND isset($_SESSION['droit'])) {
-            
+            //si le login est pas vide et si le droit est admin ou user
             if ( (!empty($_SESSION['login'])) AND in_array($_SESSION['droit'], $roles) ) {
                 return True;
             }

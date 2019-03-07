@@ -1,5 +1,12 @@
 <?php
 include("../../config.php");
+
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
+
 if (isset($_SESSION['data']) and !empty($_SESSION['data'])){
 	
 	//debug($_GET);
@@ -20,7 +27,7 @@ if (isset($_SESSION['data']) and !empty($_SESSION['data'])){
 			$i = $i + 1;
 		}
 		//Si il y a deja le meme mail dans la bd ajout pas l'etudiant
-		if (isset($insert['mail']) and !verifieDoublonsMail($insert['mail'],$connexion)){
+		if (isset($insert['mail']) and !verifieDoublonsMail("",$insert['mail'],$connexion)){
 			continue;
 		}else{
 			//vérifie que toute les données soit définie

@@ -1,6 +1,12 @@
 <?php
 include("../../config.php");
 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
+
 //récupère les infos de l'étudiant pour remplir le formulaire de modification
 $identifiant = $_POST['id'];
 $requete="SELECT * FROM ANNUAIRE,INFO WHERE Annuaire.id = INFO.id AND Annuaire.id = ".$identifiant;

@@ -1,8 +1,14 @@
 <?php
 include("../../config.php");
 
-if (isset($_POST['OK'])){
-	if (isset($_POST['mail']) and !empty($_POST['mail']) and verifieDoublonsMail($_POST['mail'],$connexion)){
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
+
+if (isset($_POST['OK'],$_POST['id'])){
+	if (isset($_POST['mail']) and !empty($_POST['mail']) and verifieDoublonsMail($_POST['id'],$_POST['mail'],$connexion)){
 		if(!empty($_POST['promotion']) or !empty($_POST['formation']) or !empty($_POST['lieu_poursuite']) or !empty($_POST['formation_poursuite']) or !empty($_POST['type_poursuite'])){
 			$req = "UPDATE info set ";
 			$n = 0;
@@ -15,7 +21,7 @@ if (isset($_POST['OK'])){
 				$req .= 'formation = "'.$_POST['formation'].'" ';
 				$n++;
 			}
-			if(!empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite'])){
+			if( !empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite'])){
 				if ($n != 0){$req .= ", ";}
 				$req .= 'lieu_poursuite = "'.$_POST['lieu_poursuite'].'", ';
 				$req .= 'formation_poursuite = "'.$_POST['formation_poursuite'].'", ';
@@ -24,7 +30,10 @@ if (isset($_POST['OK'])){
 			}else if(empty($_POST['formation_poursuite']) || empty($_POST['lieu_poursuite']) || empty($_POST['type_poursuite'])){
 				if ($n != 0){$req .= ", ";}
 				$req .= 'lieu_poursuite = NULL, ';
-				$req .= 'formation_poursuite = NULL, ';
+				if ($_POST['formation_poursuite'] == "Aucune"){ 
+					$req .= 'formation_poursuite = "'.$_POST['formation_poursuite'].'", ';
+				}else{ 
+					$req .= 'formation_poursuite = NULL, ';}
 				$req .= 'type_poursuite = NULL';
 			}
 			

@@ -1,6 +1,11 @@
 <?php
 include("../../config.php");
 
+#Si on arrive sur cette page alors que l'on est pas connecté 
+if (!estConnecte()) { 
+    header('Location: ../../connexion.php'); #On redirige vers la page de connexion
+    exit;
+}
 
 if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 	afficherErreur("Le fichier doit etre un .csv !");
@@ -23,7 +28,9 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 			echo "<hr><h4>Contenue du  fichier :</h4>";
 			afficherSucces("Ouverture du fichier réussite !");
 			echo "<p>Veulliez choisir pour chaque colonne le type de données corespondant :</p>";
-			echo "<form action='scripts/php/addCsvToBdd.php' method='GET'><table border='1' cellpading='1' align='center'> ";
+			echo "<form action='scripts/php/addCsvToBdd.php' method='GET'>
+				<div class='tab-petit'>
+				<table id='fichierCsv' border=1 align='center' class=\"table table-striped\">";
 			$i=1;
 			//pour chaque ligne du fichier
 			while (!feof($pointeur)){
@@ -58,6 +65,7 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 					}
 					echo "</tr>";
 				}
+
 				echo "<tr>";
 				//affiche les lignes du tableau
 				foreach($liste as $key => $value){
@@ -82,7 +90,7 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 				echo "</tr>";
 				$i++;
 			}
-			echo "</table><br>";
+			echo "</table></div><br/>";
 			if (isset($_POST['formation']) and !empty($_POST['formation'])){
 				echo '<label for="formation">Formation</label><input id="formation" name="formation" type="text" class="form-control input-md" value="'.$_POST['formation'].'" readonly/>';
 			}
@@ -93,9 +101,20 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 			//Sauvegarde des données du fichier csv
 			$_SESSION['data'] = $data;
 			
-			echo "<br/><input class='btn btn-outline-secondary btn-right' type='submit' value='Importer' name='importer' /><br/></form>";
-			
-			//fclose($file);
+			?>
+			<!-- Button -->
+			<div class="row">
+				<div class="col-6">
+					<input class='btn btn-outline-secondary ' type='submit' value='Importer' name='importer' />
+				</div>
+				<div class="col-6">
+					<input type='button' class="btn btn-outline-danger btn-right" name='Annuler' value='Annuler' onclick='clearZone()'/>
+				</div>
+			</div>
+			</form>
+			<br/>
+			<?php
+			fclose($pointeur);
 
 		}	
 	}		
