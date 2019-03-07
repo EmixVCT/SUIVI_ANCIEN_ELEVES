@@ -19,7 +19,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 
 	<div id='contenue' class='container-fluid'>
 		<header>
-			<center><h1>Selection</h1></center>
+			<center><h1>Sélection</h1></center>
 		</header>
 		
 		<form name='formulaire'>
@@ -27,7 +27,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 			<!-- Formulaire trié -->
 			<div class='row'>
 				<div class='col-sm-12 col-md-6 col-lg-6'>
-					<h4>Trié annuaire :</h4>
+					<h4>Trier annuaire :</h4>
 				</div>
 			</div><div class='row'>
 				<div class='col-sm-12 col-md-6 col-lg-6'>
@@ -46,7 +46,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 				</div>
 				<div class='col-sm-12 col-md-6 col-lg-6'>
 					<div class="checkbox">
-					  <label><input type="checkbox" id="EtuSansPoursuite" name="EtuSansPoursuite"/> Etudiants n'ayant pas répondu à l'enquête de poursuite d'étude</label>
+					  <label><input type="checkbox" id="EtuSansPoursuite" name="EtuSansPoursuite"/> Étudiants n'ayant pas répondu à l'enquête de poursuite d'étude</label>
 					</div>
 				</div>
 			</div>

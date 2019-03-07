@@ -34,6 +34,6 @@ if (!estConnecte()) {
 
 		echo "<div class='row'><div class='col-12'><center>";
 			$maxetu= max($nbetu);
-			echo "L'année avec le maximum d'étudiant inscrit a l'nnuaire est l'année ".$annee[array_search($maxetu, $nbetu)]." avec ".$maxetu." étudiants";
+			echo "L'année avec le maximum d'étudiants inscrit à l'annuaire est l'année ".$annee[array_search($maxetu, $nbetu)]." avec ".$maxetu." étudiants";
 		echo "</center></div></div>";
 ?>

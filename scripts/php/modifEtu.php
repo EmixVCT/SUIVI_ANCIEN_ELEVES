@@ -165,10 +165,10 @@ if (isset($_POST['OK'],$_POST['id'])){
 <!-- Button -->
 <div class="row">
 	<div class="col-6">
-		<input class="btn btn-outline-primary" name='modifier' type="button" value="modifier" onclick='validerModif("<?php echo $_POST['id'] ?>")'/>
+		<input class="btn btn-outline-primary" name='modifier' type="button" value="Modifier" onclick='validerModif("<?php echo $_POST['id'] ?>")'/>
 	</div>
 	<div class="col-6">
-		<input class="btn btn-outline-danger btn-right" name='annuler' type="button" value="annuler" onclick='informationEtu("<?php echo $_POST['id'] ?>")'/>
+		<input class="btn btn-outline-danger btn-right" name='annuler' type="button" value="Annuler" onclick='informationEtu("<?php echo $_POST['id'] ?>")'/>
 	</div>
 </div>
 

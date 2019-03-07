@@ -139,7 +139,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 		$resultat=mysqli_query($connexion,$requete);
 		//affichage du resultat utilisation de la commande mysql_fetch_row
 		?>
-		<div class='table-responsive table-wrapper-scroll-y table-sm table-condenced'>
+		<div class='tab-petit'>
 			<table border=1 align='center' class='table table-striped'>
 				<tr>
 					<th width=90 align='center'>LOGIN</th>

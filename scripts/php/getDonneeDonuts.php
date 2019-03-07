@@ -51,12 +51,12 @@ $Ingenieur = 0;$Miage = 0;$L3 = 0;$Licence = 0;$Bachelor = 0;$Autre = 0;$n = 0;$
 		echo "<div class='row'><div class='col-12'><center>";
 		if ($n > 1){
 			if ($nb_poursuite > 1){
-				echo $n." étudiants ont répondu a l'enquête et ".$nb_poursuite." sont en poursuite d'étude";
+				echo $n." étudiants ont répondu à l'enquête et ".$nb_poursuite." sont en poursuite d'étude";
 			}else{
-				echo $n." étudiants ont répondu a l'enquête et ".$nb_poursuite." est en poursuite d'étude";
+				echo $n." étudiants ont répondu à l'enquête et ".$nb_poursuite." est en poursuite d'étude";
 			}
 		}else{
-			echo $n." étudiant a répondu a l'enquête et ".$nb_poursuite." est en poursuite d'étude";
+			echo $n." étudiant a répondu à l'enquête et ".$nb_poursuite." est en poursuite d'étude";
 		}
 		echo "</center></div></div>";
 ?>

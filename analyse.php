@@ -28,7 +28,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 					$req = "SELECT distinct formation from info";
 					$result=mysqli_query($connexion,$req);
 
-					echo "<label><i>Selectionnez la formation : </i></label>";
+					echo "<label><i>Sélectionnez la formation : </i></label>";
 					echo "<select  class='custom-select' id='donus_affichage'>";
 					while ($ligne=mysqli_fetch_array($result)){
 						echo "<option name='donus_affichage' value='".$ligne[0]."'>".$ligne[0]."</option>";	}
@@ -41,12 +41,12 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 				
 			</div>
 			<div class="col-md-6">
-				<center><h4>Nombre d'étudiant dans l'annuaire par année</h4></center>
+				<center><h4>Nombre d'étudiants dans l'annuaire par année</h4></center>
 					<?php
 					$req = "SELECT distinct formation from info";
 					$result=mysqli_query($connexion,$req);
 
-					echo "<label><i>Selectionnez la formation : </i></label>";
+					echo "<label><i>Sélectionnez la formation : </i></label>";
 					echo "<select  class='custom-select' id='bar_affichage'>";
 					while ($ligne=mysqli_fetch_array($result)){
 						echo "<option name='bar_affichage' value='".$ligne[0]."'>".$ligne[0]."</option>";	}

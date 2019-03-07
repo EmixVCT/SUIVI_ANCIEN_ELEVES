@@ -8,8 +8,8 @@ if (!estConnecte()) {
     exit;
 }
 
-echo "<div class='table-responsive table-wrapper-scroll-y table-sm table-condenced'>";
-echo "<table border = 1 class='table table-striped'>";
+//echo "<div class='table-responsive table-wrapper-scroll-y table-sm table-condenced'>";
+echo "<div class='tab-petit'><table border = 1 class='table table-striped'>";
 
 
 $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='".$_POST['tb']."' and TABLE_SCHEMA='".$bd."'";
@@ -32,6 +32,6 @@ while ($ligne=mysqli_fetch_row($resultat)) {
 	}
 	echo "</tr>";
 }
-echo "</table></div>";
+echo "</table></div></div>";
 
 ?>

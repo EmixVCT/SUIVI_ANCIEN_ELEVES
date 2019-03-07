@@ -17,12 +17,12 @@ if ($res = mysqli_query($connexion,$requete)){ //test si la commande est bien ex
 	if ($rowcount == 1) { //test si on a un resultat
 		$lig = mysqli_fetch_assoc($res); //récupère la ligne de la table
 	}else{ //pas de res
-		afficherErreur("<strong>Etudiant</strong> manquant ou incorrect !");
+		afficherErreur("<strong>Étudiant</strong> manquant ou incorrect !");
 	}
 }
 ?>
 <hr>
-<h4>Information : <?php if (isset($lig['prenom'])){echo $lig['prenom'];} ?></h4>
+<h4>Informations : <?php if (isset($lig['prenom'])){echo $lig['prenom'];} ?></h4>
 <form name="modification" >
 	<div class="form-group">
 		<div class='row'>
@@ -86,9 +86,9 @@ if ($res = mysqli_query($connexion,$requete)){ //test si la commande est bien ex
 <!-- Button -->
 <div class="row">
 	<div class="col-8">
-		<input type='button' class="btn btn-outline-danger " name='supp' value='supprimer' onclick='supprimerLig("<?php echo $identifiant; ?>","id","ANNUAIRE")'/>
+		<input type='button' class="btn btn-outline-danger " name='supp' value='Supprimer' onclick='supprimerLig("<?php echo $identifiant; ?>","id","ANNUAIRE")'/>
 
-		<input type='button' class="btn btn-outline-primary" name='modif' value='modifier' onclick='modifierEtu("<?php echo $identifiant; ?>")'/>
+		<input type='button' class="btn btn-outline-primary" name='modif' value='Modifier' onclick='modifierEtu("<?php echo $identifiant; ?>")'/>
 	</div>
 	<div class="col-4">
 		<input type='button' class="btn btn-outline-danger btn-right" name='supp' value='Retour' onclick='clearZone()'/>

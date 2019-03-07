@@ -26,7 +26,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 			<!-- Formulaire trié -->
 			<div class='row'>
 				<div class='col-sm-12 col-md-6 col-lg-6'>
-					<h4>Trié annuaire :</h4>
+					<h4>Trier annuaire :</h4>
 				</div>
 			</div><div class='row'>
 				<div class='col-sm-12 col-md-6 col-lg-6'>

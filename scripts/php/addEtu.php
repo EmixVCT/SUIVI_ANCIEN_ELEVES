@@ -96,7 +96,7 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 			mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 		}
 	}else{
-		afficherErreur("Le mail est deja utilisé par un autre étudiant !");
+		afficherErreur("Le mail est déjà utilisé par un autre étudiant !");
 	}
 }else{
 ?>

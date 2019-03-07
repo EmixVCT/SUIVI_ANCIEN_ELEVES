@@ -67,7 +67,7 @@ if (mysqli_num_rows($resultat) != 0){ ?>
 <!-- Button -->
 <div class="row">
 	<div class="col-6">
-		<input class='btn btn-outline-primary' type='submit' name='selectionner' value='sélectionner'/>
+		<input class='btn btn-outline-primary' type='submit' name='selectionner' value='Sélectionner'/>
 		</form> 
 	</div>
 	<div class="col-6">

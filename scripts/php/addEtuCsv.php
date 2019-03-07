@@ -8,7 +8,7 @@ if (!estConnecte()) {
 }
 
 if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
-	afficherErreur("Le fichier doit etre un .csv !");
+	afficherErreur("Le fichier doit être un .csv !");
 	
 }else if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 	
@@ -27,7 +27,7 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 			//affiche le titre et le blabla
 			echo "<hr><h4>Contenue du  fichier :</h4>";
 			afficherSucces("Ouverture du fichier réussite !");
-			echo "<p>Veulliez choisir pour chaque colonne le type de données corespondant :</p>";
+			echo "<p>Veuillez choisir pour chaque colonne le type de données correspondant :</p>";
 			echo "<form action='scripts/php/addCsvToBdd.php' method='GET'>
 				<div class='tab-petit'>
 				<table id='fichierCsv' border=1 align='center' class=\"table table-striped\">";
@@ -153,7 +153,7 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 				</div>
 			</div>	
 		</div>
-		<br><h4>Information supplémentaire : </h4>
+		<br><h4>Information supplémentaire : (facultatif) </h4>
 
 		<div class='row'>	
 			<div class="col-6">
