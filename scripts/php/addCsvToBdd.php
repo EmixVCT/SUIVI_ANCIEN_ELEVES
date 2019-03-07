@@ -22,6 +22,7 @@ if (isset($_SESSION['data']) and !empty($_SESSION['data'])){
 			//$_GET[$i] == nom de la colonne et $name == la val de la colonne
 			if ($_GET[$i] != 'autre'){
 				$name = str_replace("\"", "'", $name);
+				$name = str_replace("\n", "", $name);
 				$insert[$_GET[$i]] = $name;
 			}
 			$i = $i + 1;

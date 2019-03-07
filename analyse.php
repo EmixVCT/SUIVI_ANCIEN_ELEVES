@@ -20,58 +20,51 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 		<header>
 			<center><h1>Analyse</h1></center>
 		</header>
-			
-		<?php
-		$Ingenieur = 0;$Miage = 0;$L3 = 0;$Licence = 0;$Bachelor = 0;$Autre = 0;$n = 0;$Aucune=0;
 		
-		$sql = "SELECT formation_poursuite FROM info where formation_poursuite IS NOT NULL";
+		<div class='row'>
+			<div class="col-md-6">
+				<center><h4>Pourcentage de poursuite d'étude par formation</h4></center>
+					<?php
+					$req = "SELECT distinct formation from info";
+					$result=mysqli_query($connexion,$req);
 
-		$resultat=mysqli_query($connexion,$sql);
-		while ($ligne=mysqli_fetch_row($resultat)) {
-			foreach($ligne as $k => $val){
-				switch($val){
-					case("Ecole d'ingenieur"):
-						$Ingenieur += 1;
-						break;
-					case("Miage"):
-						$Miage += 1;
-						break;
-					case("L3"):
-						$L3 += 1;
-						break;
-					case("Licence professionnelle"):
-						$Licence += 1;
-						break;
-					case("Bachelor"):
-						$Bachelor += 1;
-						break;
-					case('Aucune'):
-						$Aucune += 1;
-						break;
-					default:
-						$Autre += 1;
-						break;
-				}
-				$n++;
-			}
-		}
-		$nb_poursuite = $n - $Aucune;
+					echo "<label><i>Selectionnez la formation : </i></label>";
+					echo "<select  class='custom-select' id='donus_affichage'>";
+					while ($ligne=mysqli_fetch_array($result)){
+						echo "<option name='donus_affichage' value='".$ligne[0]."'>".$ligne[0]."</option>";	}
+					echo "</select><br/>";
+
+					?>
+				
+				<canvas id="doughnutChart"></canvas><br/>
+				<div id="phraseDonuts"></div>
+				
+			</div>
+			<div class="col-md-6">
+				<center><h4>Nombre d'étudiant dans l'annuaire par année</h4></center>
+					<?php
+					$req = "SELECT distinct formation from info";
+					$result=mysqli_query($connexion,$req);
+
+					echo "<label><i>Selectionnez la formation : </i></label>";
+					echo "<select  class='custom-select' id='bar_affichage'>";
+					while ($ligne=mysqli_fetch_array($result)){
+						echo "<option name='bar_affichage' value='".$ligne[0]."'>".$ligne[0]."</option>";	}
+					echo "</select><br/>";
+
+					?>
+				<canvas id="barChart"></canvas><br/>
+				<div id="phraseBar"></div>
+			</div>
+		</div>
+		<br/>
+		<?php
 		
-		if ($n > 1){
-			if ($nb_poursuite > 1){
-				echo $n." étudiants ont répondu a l'enquête et ".$nb_poursuite." sont en poursuite d'étude";
-			}else{
-				echo $n." étudiants ont répondu a l'enquête et ".$nb_poursuite." est en poursuite d'étude";
-			}
-		}else{
-			echo $n." étudiant a répondu a l'enquête et ".$nb_poursuite." est en poursuite d'étude";
-		}
 		?>
-		
-		<canvas id="doughnutChart"></canvas>
-		<?php echo '<script>show_donuts('.$Ingenieur.','.$Miage.','.$L3.','.$Licence.','.$Bachelor.','.$Autre.');</script>'; ?>
+
 		
 	</div>
+	<!--<script>show_donuts(1,2,3,4,5,6)</script>-->
 </body>
 <?php
 require_once($fichiersInclude.'footer.html'); 
