@@ -9,15 +9,14 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 	
 	if(isset($_FILES["file"],$_POST['separateur'])){
 		$file = $_FILES["file"]["tmp_name"];
-		if ($_POST['separateur'] != "auto"){
+		if ($_POST['separateur'] == "auto"){
 			$separateur = ";";
 		}else{
 			$separateur = $_POST['separateur'];
 		}
 		
-		$entete = Array();
+		//$entete = Array();
 		$data = Array();
-		$i=0;
 		//parcours le fichier
 		if ($pointeur=fopen($file,"r")){
 			//affiche le titre et le blabla
@@ -41,11 +40,29 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 					continue;
 				}*/
 				
+				
+				//si c'est la premiere ligne est qu'il n'y a pas d'entete remplie l'entete avant la boucle
+				if ($i == 1 and $_POST['entete_input'] == 'non'){
+					echo "<tr>";
+					for($x = 0; $x < count($liste); $x++){
+						echo "<th width=150 height=20 text-align='center'>
+							<select class=\"custom-select\" name=\"".$x."\" id=\"col".$x."\" required>
+								<option value=\"\"<i>N/A</i></option>
+								<option value=\"nom\">Nom</option>
+								<option value=\"prenom\">Prenom</option>
+								<option value=\"mail\">Mail</option>
+								<option value=\"promotion\">Promotion</option>
+								<option value=\"formation\">Formation</option>
+								<option value=\"autre\">Autre</option>
+							</select></th>";
+					}
+					echo "</tr>";
+				}
 				echo "<tr>";
 				//affiche les lignes du tableau
-				foreach($liste as $key => $value):
-					if ($i == 1): // premiere ligne entete du csv
-						$entete[$key] = $value;
+				foreach($liste as $key => $value){
+					if ($i == 1 and $_POST['entete_input'] == 'oui'){ // premiere ligne entete du csv
+						//$entete[$key] = $value;
 						echo "<th width=150 height=20 text-align='center'>
 							<select class=\"custom-select\" name=\"".$key."\" id=\"col".$key."\" required>
 								<option value=\"\"<i>'".$value."'</i></option>
@@ -56,11 +73,11 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 								<option value=\"formation\">Formation</option>
 								<option value=\"autre\">Autre</option>
 							</select></th>";
-					else:
+					}else{
 						$data[$i][] = $value;
 						echo "<td width=50 height=20 align='center'>".$value."</td>";
-					endif;
-				endforeach;
+					}
+				}
 				
 				echo "</tr>";
 				$i++;
@@ -76,7 +93,7 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 			//Sauvegarde des données du fichier csv
 			$_SESSION['data'] = $data;
 			
-			echo "<br/><input class='btn btn-outline-secondary btn-right' type='submit' value='Importer' name='importer' /></form>";
+			echo "<br/><input class='btn btn-outline-secondary btn-right' type='submit' value='Importer' name='importer' /><br/></form>";
 			
 			//fclose($file);
 
@@ -108,10 +125,13 @@ if (isset($_POST['NON']) and $_POST['NON'] == 'NON'){
 					<option value=";">;</option>
 				</select>
 			</div>	
-			
+
 			<div class="col-4">
-				<label class="control-label" for="nom">dzadzadaz</label>  
-				<input id="nom" name="nom" type="text" placeholder="" class="form-control input-md">
+				<label class="control-label" for="entete_input">Entete de CSV</label>  
+				<div class="custom-radio-inline">
+					<label class="radio-inline mr-3"><input type="radio" name="entete_input" value="oui" id="oui" checked/>OUI</label>
+					<label class="radio-inline mr-3"><input type="radio" name="entete_input" value="non" id="non" />NON</label>
+				</div>
 			</div>	
 		</div>
 		<br><h4>Information supplémentaire : </h4>

@@ -223,6 +223,8 @@ function validerImportation(){
 					//mauvais format de fichier
 					formData.append("NON","NON");
 				}
+			}else if(elemFormA[i].name == "entete_input" && !elemFormA[i].checked){
+				continue;
 			}else{
 				formData.append(elemFormA[i].name,elemFormA[i].value);
 			}
@@ -242,26 +244,7 @@ function validerImportation(){
 	xhrAddCsv.open("POST","scripts/php/addEtuCsv.php",true);
 	xhrAddCsv.send(formData);	
 }
-/*
-function CsvToBdd(entete,data){
-	console.log(entete);
-	console.log(data);
-	
-	formData = new FormData();
-	
-	xhrAddToBdd = new XMLHttpRequest();
-	xhrAddToBdd.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("modifEtu").innerHTML = this.responseText;
-			show_table_trie();
-		}
-	};
-	
-	xhrAddToBdd.open("POST","scripts/php/addEtuCsv.php",true);
-	xhrAddToBdd.send(formData);
-	
-}
-*/
+
 /* FONCTIONS D'AFFICHAGE */
 function informationEtu(id){
 	entete = "id="+id; 

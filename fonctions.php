@@ -17,7 +17,8 @@
         <?php
     }
 	
-    function verifieDoublonsMail($m,$con) { //renvoie vrai s'il n'existe pas de mail identique dans la base de donnée
+    function verifieDoublonsMail($m,$con) { 
+		/*renvoie vrai s'il n'existe pas de mail identique dans la base de donnée*/
 		//récupère l'identifiant lié au mail
 		$sql = "SELECT id FROM annuaire where mail like '".$m."'";
 
