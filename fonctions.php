@@ -109,4 +109,54 @@
 		return $res;
 	}
 
+	function get_historique($utilisateur,$cnx){
+		/*renvoie le nom du fichier correspondant à l'utilisateur*/
+		$sql = "SELECT droit FROM utilisateur WHERE login like \"".$utilisateur."\"";
+		
+		$resultat=mysqli_query($cnx,$sql);
+		
+		$ligne=mysqli_fetch_row($resultat);
+		
+		$droit = $ligne[0];
+		
+		if($droit == "user"){
+			return "historique/".dec_enc("encrypt",$utilisateur).".txt";
+		}else if($droit == "admin"){
+			return "historique/".dec_enc("encrypt","actions").".txt";
+		}
+	}
+	
+	function set_historique($fichier,$string){
+		//rempli l'historique fichier avec la chaine de charactère
+		
+		$file = fopen($fichier, "a");
+		date_default_timezone_set('Europe/Paris');
+		$txt = "[".date("d/m/y à H\hi")."] ";
+		$txt .= $string;
+		$txt .= "\r\n";
+		
+		fputs ($file, $txt);
+		fclose ($file);
+		
+		$tabFich = file($fichier);
+		$nbLignes = count($tabFich);
+		
+		if ($nbLignes > 50){
+			$ptr = fopen($fichier, "r");
+			$contenu = fread($ptr, filesize($fichier));
+
+			/* On a plus besoin du pointeur */
+			fclose($ptr);
+
+			$contenu = explode(PHP_EOL, $contenu); /* PHP_EOL contient le saut à la ligne utilisé sur le serveur (\n linux, \r\n windows ou \r Macintosh */
+
+			unset($contenu[0]); /* On supprime la ligne 52 par exemple */
+			$contenu = array_values($contenu); /* Ré-indexe l'array */
+			/* Puis on reconstruit le tout et on l'écrit */
+			$contenu = implode(PHP_EOL, $contenu);
+			$ptr = fopen($fichier, "w");
+			fwrite($ptr, $contenu);
+		}
+	}
+		
 ?>

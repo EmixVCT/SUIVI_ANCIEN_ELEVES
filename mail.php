@@ -118,20 +118,15 @@ if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 		}		
 		//=========
 		//remplis le fichier avec les actions
-		$file = fopen ("historique/actions.txt", "a");
-		
-		date_default_timezone_set('Europe/Paris');
-		$txt = "[".date("d/m/y à H\hi")."] "; //"D, d M Y H:i:s"
 		if ($n > 1){
-			$txt .= $n." mails ont été envoyés";
+			$txt = $n." mails ont été envoyés";
 		}else{
-			$txt .= $n." mail a été envoyé";
+			$txt = $n." mail a été envoyé";
 		}
-		$txt .= "\r\n";
-		
-		fputs ($file, $txt);
-		fclose ($file);
-		
+		$fichier = get_historique($_SESSION['login'],$connexion);
+		$fichierAdmin = "historique/".dec_enc("encrypt","actions").".txt";
+		set_historique($fichier,$txt);		
+		set_historique($fichierAdmin,$txt." par ".$_SESSION['login']);	
 		
 		unset($_SESSION['src']);
 		unset($_SESSION['obj']);

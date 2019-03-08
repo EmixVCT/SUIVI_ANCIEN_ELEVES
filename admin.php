@@ -103,6 +103,14 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 					mysqli_stmt_bind_param($reqprepare,'sss',$login,$mdp,$droit);
 					mysqli_stmt_execute($reqprepare);
 					unset($_POST['clogin']);
+					
+					//crée un fichier historique pour l'utilisateur
+					if($droit =="user"){
+						$fichier = get_historique($login,$connexion);
+						fopen($fichier,"w+");
+						set_historique($fichier,"Création du compte");
+					}
+					
 				}
 			//Si le formulaire est remplie et les mots de passe sont different affiche une erreur
 			}else if(isset($_POST["clogin"],$_POST["cmdp"],$_POST["cmdpconf"],$_POST["ctype"]) and $_POST["cmdp"] != $_POST["cmdpconf"]){
@@ -116,10 +124,21 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 					echo "<a href='admin.php?act=sup&log=".$_GET['log']."&conf=OK'>OUI</a>";
 					echo " <a href='admin.php'>NON</a><br/>";
 				}else{
+					//suppression historique
+					$sql = "select droit from utilisateur where login like \"".$_GET['log']."\"";
+					$res = mysqli_query($connexion,$sql);
+					$l = mysqli_fetch_row($res);
+					$droit = $l[0];
+					
+					if($droit =="user"){
+						$fichier = get_historique($_GET['log'],$connexion);
+						unlink($fichier);
+					}
+					
 					// lancement de la requête
 					$reqsuppr = "DELETE from UTILISATEUR where login = '".$_GET['log']."'";
 					// on exécute la requête (mysql_query) et on affiche un message au cas où la requête ne se passait pas bien (or die)
-					mysqli_query($connexion,$reqsuppr) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
+					mysqli_query($connexion,$reqsuppr) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));					
 					
 					header('location: admin.php');
 				}

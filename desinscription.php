@@ -36,14 +36,8 @@ require_once($fichiersInclude.'header.html');
 						echo '<h1>Merci '.$etudiant.' !</h1><br/> <h4>Vous n\'êtes plus inscrit à l\'annuaires ! </h4>'; 
 						
 						//remplis le fichier avec les actions
-						$file = fopen ("historique/actions.txt", "a");
-						date_default_timezone_set('Europe/Paris');
-						$txt = "[".date("d/m/y à H\hi")."] ";
-						$txt .= $etudiant." c'est désinscrie de l'annuaire";
-						$txt .= "\r\n";
-						
-						fputs ($file, $txt);
-						fclose ($file);
+						$fichier = "historique/".dec_enc("encrypt","actions").".txt";
+						set_historique($fichier,$etudiant." c'est désinscrie de l'annuaire");
 						
 					}else{ //sinon lui dit qu'il n'est pas inscrit a l'annuaire
 						echo "Vous n'êtes pas inscrit à l'annuaire, si vous continuer à recevoir des mails de notre part veuillez contacter un responsable de l'IUT de Velizy";

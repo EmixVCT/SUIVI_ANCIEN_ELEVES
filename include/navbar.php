@@ -31,7 +31,8 @@
 
 			</ul>
 			<form class="form-inline my-2 my-lg-0 mr-3 ml-2 mb-1" action='logout.php' method='POST'>
-				<button class="btn btn-danger my-2 my-sm-0" action='submit' name='deco' >Déconnexion</button>
+				<label for="" class="mr-2"><?php echo $_SESSION['login']; ?></label>
+				<button class="btn btn-danger my-2 my-sm-0" action='submit' name='deco' id="deco" >Déconnexion</button>
 			</form>
 		</div>
 	</nav>

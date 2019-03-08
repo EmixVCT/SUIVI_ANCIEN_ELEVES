@@ -26,7 +26,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 			<div class="input-group col-md-9">
 				<textarea class="form-control disable" name="historique" rows="10" readonly><?php
 				
-				$tab = file('historique/actions.txt');
+				$tab = file(get_historique($_SESSION['login'],$connexion));
 				$tab = array_reverse($tab);
 				foreach($tab as $ligne){
 				 echo $ligne;

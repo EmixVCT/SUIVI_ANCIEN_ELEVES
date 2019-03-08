@@ -76,14 +76,8 @@ require_once('../config.php'); #On inclut la configuration
 						echo '<h1>Merci '.$etudiant.' !</h1><br/> <h4>Vos réponses ont été transmise, merci de votre temps ! </h4>'; 
 						
 						//remplis le fichier avec les actions
-						$file = fopen ("../historique/actions.txt", "a");
-						date_default_timezone_set('Europe/Paris');
-						$txt = "[".date("d/m/y à H\hi")."] ";
-						$txt .= $etudiant." a répondu à l'enquête";
-						$txt .= "\r\n";
-						
-						fputs ($file, $txt);
-						fclose ($file);
+						$fichier = "historique/".dec_enc("encrypt","actions").".txt";
+						set_historique("../".$fichier,$etudiant." a répondu à l'enquête");
 						
 					}else{
 						echo '<h4>Nous avons rencontré une erreur merci de bien vouloir réessayer ! </h4>';  
