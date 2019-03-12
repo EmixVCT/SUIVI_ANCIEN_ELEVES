@@ -194,7 +194,7 @@ require_once($fichiersInclude.'header.html'); #On inclut l'entête
 		$req = "show tables";
 		$result=mysqli_query($connexion,$req);
 
-		echo "<label>Selectionnez la table : </label>";
+		echo "<label>Sélectionnez la table : </label>";
 		echo "<select  class='custom-select' id='tables'>";
 		while ($ligne=mysqli_fetch_array($result))
 		{
