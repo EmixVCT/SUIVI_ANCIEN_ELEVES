@@ -1,6 +1,8 @@
 <?php 
   
 require_once('config.php'); #On inclut la configuration
+require_once '.\PHPMailer\autoload.php'; //Load Composer's autoloader
+use PHPMailer\PHPMailer\PHPMailer;
 
 #Si on arrive sur cette page alors que l'on est pas connecté 
 if (!estConnecte()) { 
@@ -39,7 +41,6 @@ if(isset($_POST['dst']) and $_POST['dst'] == 'Destinataire'){
 
 //Si on clique sur envoyer
 if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
-
 	if (empty($_POST['src'])){
 		$erreurMail = true;
 	}else if (empty($_SESSION['dst'])){
@@ -47,26 +48,43 @@ if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 	}else if (empty($_POST['contenue'])){
 		$erreurContenu = true;
 	}else{//ENVOIE DU MAIL
+		$mail = new PHPMailer();
+		//CONFIG
+		$mail->SMTPDebug = 0;
+
+		$mail->SMTPOptions = array('ssl' => array('verify_peer' => false,'verify_peer_name' => false,'allow_self_signed' => true));
+		$mail->isSMTP(); // Paramétrer le Mailer pour utiliser SMTP 
+		$mail->Host = 'smtp.gmail.com'; // Spécifier le serveur SMTP
+		$mail->SMTPAuth = true; // Activer authentication SMTP
+		$mail->Username = 'dilatete83@gmail.com'; // Votre adresse email d'envoi
+		$mail->Password = 'maxime2601'; // Le mot de passe de cette adresse email
+		$mail->SMTPSecure = 'tls'; // Accepter SSL
+		$mail->Port = 587;
+		$mail->Host = 'tls://smtp.gmail.com:587';
+
+		//PARAMETRE du mail
+		$mail->setFrom($_POST['src'], 'maxiimus'); // Personnaliser l'envoyeur
+		$mail->isHTML(true); // Paramétrer le format des emails en HTML ou non
 		
 		$lien_desinscription = "http://localhost/p/desinscription.php";
 		$lien_enquete = "http://localhost/p/formulaire/enquete.php";
+		$contenu = $_POST['contenue'];
+		$mail->Subject = $_POST['obj'];
+
+		//$mail->addReplyTo('info@example.com', 'Information'); // L'adresse de réponse
+		//$mail->addCC('cc@example.com');
+		//$mail->addBCC('bcc@example.com');
+		//$mail->addAttachment('/var/tmp/file.tar.gz'); // Ajouter un attachement
+		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg'); 
 		
-		$n = 0;
-		
+		$n =0;
 		//On envoie les mail un par un pour filtré les serveurs qui rencontrent des bogues
-		foreach($_SESSION['dst'] as $mail){
+		foreach($_SESSION['dst'] as $mail_dst){
+			$mail->addAddress($mail_dst); // Ajouter le destinataire
+			$mail_crypt = dec_enc("encrypt",$mail_dst);
 			
-			$mail_crypt = dec_enc("encrypt",$mail);
-			
-			if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)){ // On filtre les serveurs qui rencontrent des bogues.
-				$passage_ligne = "\r\n";
-			}else{
-				$passage_ligne = "\n";
-			}
-		
-			//=====Déclaration du messageu au format HTML.
 			$message_html = '<html><head><style type="text/css">#contenue{margin-left:20%;margin-right:20%}.footer{font-size: 0.8em;}</style></head>';
-			$message_html .= "<body><div id='contenue'><p>".$_POST['contenue']."</p>";
+			$message_html .= "<body><div id='contenue'><p>".$contenu."</p>";
 			if (isset($_POST['lien']) and $_POST['lien']=='enquete'){
 				$message_html .= '<p>Lien vers l\'enquête :  <a href="'.$lien_enquete.'?q='.$mail_crypt.'">Enquête</a></p>';
 			}
@@ -75,44 +93,28 @@ if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 				adoptées le 14 avril 2016, vous bénéficiez d’un droit d’effacement des données personnelles.Vous pouvez exercer 
 				vos droits et ne plus recevoir de mail de notre part en 
 				<a href=\"".$lien_desinscription."?q=".$mail_crypt."\" >cliquant ici </a></i></p></div></body></html>";
-			//==========
-			 
-			//=====Création de la boundary
-			$boundary = "-----=".md5(rand());
-			//==========
-			 
-			//=====Création du header de l'e-mail.
-			$header = "From: \"".$_POST['src']."\"".$_POST['src']."".$passage_ligne;
-			//$header.= "Reply-to: \"WeaponsB\" <weaponsb@mail.fr>".$passage_ligne;
-			$header.= "MIME-Version: 1.0".$passage_ligne;
-			$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
-			//==========
-			 
-			//=====Création du message.
-			$message = $passage_ligne."--".$boundary.$passage_ligne;
+			$mail->Body = $message_html;
+			$mail->AltBody = $message_html;
 
-			//=====Ajout du message au format HTML
-			$message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
-			$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-			$message.= $passage_ligne.$message_html.$passage_ligne;
-			//==========
-			$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-			$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 			
 			//=====Envoi de l'e-mail.
-			if (!mail($mail,$_POST['obj'],$message,$header) ){
-				afficherErreur("Une erreur est survenue lors de l'envoi du mail à ".$mail."!");
+			if(!$mail->send()) {
+				afficherErreur("Une erreur est survenue lors de l'envoi du mail à ".$mail_dst."!");
 				//remplis le fichier avec les actions
 				$file = fopen ("historique/actions.txt", "a");
 				date_default_timezone_set('Europe/Paris');
 				
 				$txt = "[".date("d/m/y à H\hi")."] ";
-				$txt .= "Erreur lors de l'envoie du mail à (".$mail.")";
+				$txt .= "Erreur lors de l'envoie du mail à (".$mail_dst.")";
 				$txt .= "\r\n";
 				
 				fputs ($file, $txt);
 				fclose ($file);
-			}else{
+				
+				//echo 'Mailer Error: ' . $mail->ErrorInfo;
+			} else {
+				$mail->clearAddresses();
+				//echo 'Le message a bien été envoyé !<br/>';
 				$n++;
 			}
 		}		
@@ -132,10 +134,8 @@ if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 		unset($_SESSION['obj']);
 		unset($_SESSION['contenue']);
 		unset($_SESSION['dst']);
-	
-		header('location: index.php');
-		exit();
-	}
+		
+	}	
 }
 
 /*Stock dans une list (SESSION Array) les emails des etudiants selectionner (grace a leur id)*/
