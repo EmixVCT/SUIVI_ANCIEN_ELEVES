@@ -41,7 +41,7 @@ require_once('../config.php'); #On inclut la configuration
 							//si l'adresse mail est definie et differente
 							if (isset($_POST['email']) and !empty($_POST['email']) and $_POST['email'] != $mail){
 								//vérifie qu'il n'est pas deja attribué
-								if (verifieDoublonsMail($_POST['email'],$connexion)){
+								if (verifieDoublonsMail("",$_POST['email'],$connexion)){
 									$req = "UPDATE annuaire set mail = '".$_POST['email']."' WHERE id = ".$id;
 									mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 								}else{//redirige et lui affiche une erreur
