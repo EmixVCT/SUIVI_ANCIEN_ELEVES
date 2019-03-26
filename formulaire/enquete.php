@@ -32,6 +32,10 @@ require_once('../config.php'); #On inclut la configuration
 							$('#codeP').css("border-color","#FF0000");
 							valid = false;
 						}
+						if ( $('#etablissement').val() == "" ){
+							$('#etablissement').css("border-color","#FF0000");
+							valid = false;
+						}
 					}
 					return valid;
 				});
@@ -119,7 +123,12 @@ require_once('../config.php'); #On inclut la configuration
 							</div>
 						</div>
 						
-						
+						<div class="form-row">
+							<div class="col-12">
+								<label for="lieu">Nom de votre établissement : **</label>
+								<input type="text" class="form-control" name="etablissement" id="etablissement" placeholder="Nom de l'école">
+							</div>
+						</div>
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label for="lieu">Commune de votre établissement : **</label>

@@ -41,7 +41,7 @@ require_once('../config.php'); #On inclut la configuration
 							//si l'adresse mail est definie et differente
 							if (isset($_POST['email']) and !empty($_POST['email']) and $_POST['email'] != $mail){
 								//vérifie qu'il n'est pas deja attribué
-								if (verifieDoublonsMail("",$_POST['email'],$connexion)){
+								if (verifieDoublonsMail($_POST['email'],$connexion)){
 									$req = "UPDATE annuaire set mail = '".$_POST['email']."' WHERE id = ".$id;
 									mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 								}else{//redirige et lui affiche une erreur
@@ -63,7 +63,7 @@ require_once('../config.php'); #On inclut la configuration
 							}else{
 								$formationPost = $_POST['formation'];
 							}
-							$req = 'UPDATE info set formation_poursuite = "'.$formationPost.'" , lieu_poursuite = "'.$_POST['lieu'].' / '.$_POST['codeP'].'" , type_poursuite = "'.$_POST['type_formation'].'" ';
+							$req = 'UPDATE info set formation_poursuite = "'.$formationPost.'" , lieu_poursuite = "'.$_POST['lieu'].' / '.$_POST['codeP'].'" , type_poursuite = "'.$_POST['type_formation'].'" , etablissement_poursuite = "'.$_POST['etablissement'].'"';
 							$req .= "WHERE id = ".$id;
 							mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 						//sinon	

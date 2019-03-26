@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.12
--- http://www.phpmyadmin.net
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
 --
--- Client :  127.0.0.1
--- Généré le :  Mer 13 Mars 2019 à 09:05
--- Version du serveur :  5.6.16
--- Version de PHP :  5.5.11
+-- Hôte : 127.0.0.1
+-- Généré le :  mar. 26 mars 2019 à 16:15
+-- Version du serveur :  10.1.36-MariaDB
+-- Version de PHP :  7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de données :  `anciens_etudiants`
@@ -26,21 +28,26 @@ SET time_zone = "+00:00";
 -- Structure de la table `annuaire`
 --
 
-CREATE TABLE IF NOT EXISTS `annuaire` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `annuaire` (
+  `id` int(4) NOT NULL,
   `nom` varchar(30) NOT NULL,
   `prenom` varchar(30) NOT NULL,
-  `mail` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+  `mail` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `annuaire`
+-- Déchargement des données de la table `annuaire`
 --
 
 INSERT INTO `annuaire` (`id`, `nom`, `prenom`, `mail`) VALUES
-(4, 'nait belkacem', 'driss', 'driss.naitbelkacem@gmail.com\r'),
-(5, 'vinc', 'maxou', 'maxiimus83@gmail.com\r');
+(170, 'VINCENT', 'Maxime', 'maxs.vincent78@gmail.com'),
+(171, 'NAIT BELKACEM', 'Driss', 'driss@gmail.com'),
+(172, 'HAMEL', 'Hugo', 'HH@gmail.com'),
+(173, 'MOUZOURI', 'Ilhame', 'Mouzmouz@gmail.com'),
+(174, 'DUPONT', 'Jean', 'DD@glaposte.net'),
+(176, 'Dutheil', 'Romain', 'rominou@gmail.com'),
+(177, 'COUSIN', 'Rebecca', 'reb@gmail.com'),
+(178, 'DUPONT', 'Pierre', 'dd@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -48,24 +55,30 @@ INSERT INTO `annuaire` (`id`, `nom`, `prenom`, `mail`) VALUES
 -- Structure de la table `info`
 --
 
-CREATE TABLE IF NOT EXISTS `info` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `promotion` varchar(60) NOT NULL,
-  `formation` varchar(60) NOT NULL,
+CREATE TABLE `info` (
+  `id` int(4) NOT NULL,
+  `promotion` varchar(60) DEFAULT NULL,
+  `formation` varchar(60) DEFAULT NULL,
   `lieu_poursuite` varchar(60) DEFAULT NULL,
   `formation_poursuite` varchar(60) DEFAULT NULL,
   `type_poursuite` varchar(60) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+  `etablissement_poursuite` varchar(60) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `info`
+-- Déchargement des données de la table `info`
 --
 
-INSERT INTO `info` (`id`, `promotion`, `formation`, `lieu_poursuite`, `formation_poursuite`, `type_poursuite`) VALUES
-(1, '2019', 'INFO', 'dzad / dzadzad', 'Ecole d''ingenieur', 'initiale'),
-(4, '2019', 'INFO', NULL, NULL, NULL),
-(5, '2019', 'INFO', NULL, NULL, NULL);
+INSERT INTO `info` (`id`, `promotion`, `formation`, `lieu_poursuite`, `formation_poursuite`, `type_poursuite`, `etablissement_poursuite`) VALUES
+(170, '2019', 'INFO', NULL, NULL, NULL, NULL),
+(171, '2019', 'INFO', NULL, NULL, NULL, NULL),
+(172, '2019', 'INFO', NULL, NULL, NULL, NULL),
+(173, '2019', 'INFO', NULL, NULL, NULL, NULL),
+(174, '2015', 'INFO', 'VELIZY', 'Ecole d\'ingenieur', 'initiale', 'ISTY'),
+(175, '2015', 'INFO', NULL, 'Aucune', NULL, NULL),
+(176, '2017', 'INFO', 'ORSAY', 'Miage', 'alternance', 'Fac ORSAY'),
+(177, '2015', 'INFO', NULL, NULL, NULL, NULL),
+(178, '2015', 'INFO', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -73,20 +86,54 @@ INSERT INTO `info` (`id`, `promotion`, `formation`, `lieu_poursuite`, `formation
 -- Structure de la table `utilisateur`
 --
 
-CREATE TABLE IF NOT EXISTS `utilisateur` (
+CREATE TABLE `utilisateur` (
   `login` varchar(10) NOT NULL,
   `mdp` varchar(64) NOT NULL,
-  `droit` varchar(10) NOT NULL,
-  PRIMARY KEY (`login`)
+  `droit` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `utilisateur`
+-- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`login`, `mdp`, `droit`) VALUES
 ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin'),
 ('max', '9baf3a40312f39849f46dad1040f2f039f1cffa1238c41e9db675315cfad39b6', 'user');
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `annuaire`
+--
+ALTER TABLE `annuaire`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Index pour la table `info`
+--
+ALTER TABLE `info`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `annuaire`
+--
+ALTER TABLE `annuaire`
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
+
+--
+-- AUTO_INCREMENT pour la table `info`
+--
+ALTER TABLE `info`
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

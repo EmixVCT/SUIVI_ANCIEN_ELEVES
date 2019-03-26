@@ -52,18 +52,18 @@ if(isset($_POST['envoyer']) and $_POST['envoyer'] == "Envoyer"){
 		//CONFIG
 		$mail->SMTPDebug = 0;
 
-		$mail->SMTPOptions = array('ssl' => array('verify_peer' => false,'verify_peer_name' => false,'allow_self_signed' => true));
+		$mail->SMTPOptions = $SMTPOptions;
 		$mail->isSMTP(); // Paramétrer le Mailer pour utiliser SMTP 
-		$mail->Host = 'smtp.gmail.com'; // Spécifier le serveur SMTP
-		$mail->SMTPAuth = true; // Activer authentication SMTP
-		$mail->Username = 'dilatete83@gmail.com'; // Votre adresse email d'envoi
-		$mail->Password = 'maxime2601'; // Le mot de passe de cette adresse email
-		$mail->SMTPSecure = 'tls'; // Accepter SSL
-		$mail->Port = 587;
-		$mail->Host = 'tls://smtp.gmail.com:587';
+		$mail->Host = $Host; // Spécifier le serveur SMTP
+		$mail->SMTPAuth = $SMTPAuth; // Activer authentication SMTP
+		$mail->Username = $Username; // Votre adresse email d'envoi
+		$mail->Password = $Password; // Le mot de passe de cette adresse email
+		$mail->SMTPSecure = $SMTPSecure; // Accepter SSL
+		$mail->Port = $Port;
+		$mail->Host = $Host;
 
 		//PARAMETRE du mail
-		$mail->setFrom($_POST['src'], 'maxiimus'); // Personnaliser l'envoyeur
+		$mail->setFrom($_POST['src'], $From); // Personnaliser l'envoyeur
 		$mail->isHTML(true); // Paramétrer le format des emails en HTML ou non
 		
 		$lien_desinscription = "http://localhost/p/desinscription.php";

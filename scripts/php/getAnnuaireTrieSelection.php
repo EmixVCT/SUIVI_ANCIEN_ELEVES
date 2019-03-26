@@ -42,7 +42,12 @@ if (mysqli_num_rows($resultat) != 0){ ?>
 				<th class="col-3">NOM</th>
 				<th class="col-2">PROMOTION</th>
 				<th class="col-2">FORMATION</th>
-				<th class="col-2" align='center'><input type='checkbox' name='etu' value='tout' onclick="selectAll(this)" /></th>
+				<th class="col-2" align='center'>
+					<label class="custom-control custom-checkbox">
+						<input type='checkbox' class="custom-control-input" name='etu' value='tout' onclick="selectAll(this)" />
+						<span class='custom-control-indicator'></span> 
+					</label>
+				</th>
 			</tr></thead>
 		<tbody>
 		<?php
@@ -57,10 +62,12 @@ if (mysqli_num_rows($resultat) != 0){ ?>
 					}
 				}
 			}
-			echo "<td class='col-2' align='center'> <input type='checkbox' name='etu[]' value='";
-			echo $ligne[0];
-			echo "' /> </td>";	
-			echo "</tr>";
+			echo "<td class='col-2' align='center'> ";
+			echo '<label class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" name="etu[]" value=" '.$ligne[0].' "/>';
+			echo "<span class='custom-control-indicator'></span> </label>";	
+			echo "</td></tr>";
+						
 		}
 		echo "</tbody></table>"; ?>
 	</div>

@@ -33,7 +33,7 @@
 
 		$rowcount=mysqli_num_rows($resultat);
 		
-		if ($rowcount == 0) { //test si on a un resultat
+		if ($rowcount == 0 ) { //test si on a un resultat
 			return True; 
 		}else{ 
 			return False;
@@ -150,18 +150,12 @@
 
 			$contenu = explode(PHP_EOL, $contenu); /* PHP_EOL contient le saut à la ligne utilisé sur le serveur (\n linux, \r\n windows ou \r Macintosh */
 
-			unset($contenu[0]); /* On supprime la ligne 0 */
+			unset($contenu[0]); /* On supprime la ligne 52 par exemple */
 			$contenu = array_values($contenu); /* Ré-indexe l'array */
 			/* Puis on reconstruit le tout et on l'écrit */
 			$contenu = implode(PHP_EOL, $contenu);
 			$ptr = fopen($fichier, "w");
 			fwrite($ptr, $contenu);
-			
-			
-			$file = fopen($fichier, "a");
-			$txt = "\r\n";
-			fputs ($file, $txt);
-			fclose ($file);
 		}
 	}
 		

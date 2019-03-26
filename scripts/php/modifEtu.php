@@ -9,7 +9,7 @@ if (!estConnecte()) {
 
 if (isset($_POST['OK'],$_POST['id'])){
 	if (isset($_POST['mail']) and !empty($_POST['mail']) and verifieDoublonsMail($_POST['id'],$_POST['mail'],$connexion)){
-		if(!empty($_POST['promotion']) or !empty($_POST['formation']) or !empty($_POST['lieu_poursuite']) or !empty($_POST['formation_poursuite']) or !empty($_POST['type_poursuite'])){
+		if(!empty($_POST['promotion']) or !empty($_POST['formation']) or !empty($_POST['lieu_poursuite']) or !empty($_POST['formation_poursuite']) or !empty($_POST['type_poursuite']) or !empty($_POST['etablissement_poursuite'])){
 			$req = "UPDATE info set ";
 			$n = 0;
 			if(!empty($_POST['promotion'])){
@@ -21,20 +21,22 @@ if (isset($_POST['OK'],$_POST['id'])){
 				$req .= 'formation = "'.$_POST['formation'].'" ';
 				$n++;
 			}
-			if( !empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite'])){
+			if( !empty($_POST['formation_poursuite']) && $_POST['formation_poursuite'] != "Aucune" && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite']) && !empty($_POST['etablissement_poursuite'])){
 				if ($n != 0){$req .= ", ";}
 				$req .= 'lieu_poursuite = "'.$_POST['lieu_poursuite'].'", ';
 				$req .= 'formation_poursuite = "'.$_POST['formation_poursuite'].'", ';
-				$req .= "type_poursuite = '".$_POST['type_poursuite']."' ";
+				$req .= "type_poursuite = '".$_POST['type_poursuite']."', ";
+				$req .= "etablissement_poursuite = '".$_POST['etablissement_poursuite']."' ";
 				$n++;
-			}else if(empty($_POST['formation_poursuite']) || empty($_POST['lieu_poursuite']) || empty($_POST['type_poursuite'])){
+			}else if(empty($_POST['formation_poursuite']) || $_POST['formation_poursuite'] == "Aucune" || empty($_POST['lieu_poursuite']) || empty($_POST['type_poursuite']) || empty($_POST['etablissement_poursuite'])){
 				if ($n != 0){$req .= ", ";}
 				$req .= 'lieu_poursuite = NULL, ';
 				if ($_POST['formation_poursuite'] == "Aucune"){ 
 					$req .= 'formation_poursuite = "'.$_POST['formation_poursuite'].'", ';
 				}else{ 
 					$req .= 'formation_poursuite = NULL, ';}
-				$req .= 'type_poursuite = NULL';
+				$req .= 'type_poursuite = NULL,';
+				$req .= 'etablissement_poursuite = NULL';
 			}
 			
 			$req .= " WHERE id = ".$_POST['id'];
@@ -63,7 +65,12 @@ if (isset($_POST['OK'],$_POST['id'])){
 			mysqli_query($connexion,$req) or die('Erreur SQL !'.$sql.'<br />'.mysqli_error($connexion));
 		}
 	}else{
-		afficherErreur("Le mail est deja utilisé par un autre étudiant !");
+		if (empty($_POST['mail'])){
+			afficherErreur("Veulliez saisir une adresse mail");
+		}else{
+			afficherErreur("Le mail est deja utilisé par un autre étudiant !");
+
+		}
 	}
 	
 }else{
@@ -117,14 +124,14 @@ if (isset($_POST['OK'],$_POST['id'])){
 			<div class="col-12">
 				<label class="control-label" for="mail">Adresse email</label> 
 				<input id="mail" name="mail" type="email" placeholder="xxx@xxx.x" class="form-control input-md"
-				<?php if (isset($lig['mail'])){echo "value=\"".$lig['mail']."\"";} ?> >
+				<?php if (isset($lig['mail'])){echo "value=\"".$lig['mail']."\"";}else{echo "value=''";} ?> >
 			</div>
 		</div>
 		
 		<div class="row">
-			<div class="col-4">		
+			<div class="col-6">		
 				<label class="control-label" for="formation_poursuite">Formation poursuite</label>
-				<select class="custom-select" name="formation_poursuite" id="formation_poursuite" required>
+				<select class="custom-select" name="formation_poursuite" id="formation_poursuite" >
 					<option value=""<?php if(empty($lig['formation_poursuite'])){echo "selected";} ?>>N/A</option>
 					<option value="Ecole d'ingenieur" <?php if($lig['formation_poursuite'] == $formations_p[0]){echo "selected";} ?>> École d'ingénieur</option>
 					<option value="Miage"<?php if($lig['formation_poursuite'] == $formations_p[1]){echo "selected";} ?>> MIAGE</option>
@@ -143,17 +150,24 @@ if (isset($_POST['OK'],$_POST['id'])){
 				<!--<input id="formation_poursuite" name="formation_poursuite" type="text" placeholder="" class="form-control input-md">-->
 			</div>
 			
-			<div class="col-4">	
+			<div class="col-6">	
 				<label class="control-label" for="type_poursuite">Type poursuite</label>  
-				<select class="custom-select" name="type_poursuite" id="type_poursuite" required>
+				<select class="custom-select" name="type_poursuite" id="type_poursuite" >
 					<option value=""<?php if(empty($lig['type_poursuite'])){echo "selected";} ?>>N/A</option>
 					<option value="initiale"<?php if($lig['type_poursuite']=="initiale"){echo "selected";} ?>>Initial</option>
 					<option value="alternance"<?php if($lig['type_poursuite']=="alternance"){echo "selected";} ?>>Alternance</option>
 				</select>
 				<!--<input id="type_poursuite" name="type_poursuite" type="text" placeholder="Alternance ou Initial" class="form-control input-md">-->
 			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<label class="control-label" for="etablissement_poursuite">Établissement poursuite</label>
+				<input id="etablissement_poursuite" name="etablissement_poursuite" type="text" placeholder="[Non renseigné]" class="form-control input-md"
+				<?php if (isset($lig['etablissement_poursuite']) && !empty($lig["etablissement_poursuite"])){echo "value=\"".$lig['etablissement_poursuite']."\"";} ?>>
+			</div>
 			
-			<div class="col-4">
+			<div class="col-6">
 				<label class="control-label" for="lieu_poursuite">Lieu poursuite</label>
 				<input id="lieu_poursuite" name="lieu_poursuite" type="text" placeholder="ville / département" class="form-control input-md"
 				<?php if (isset($lig['lieu_poursuite']) && !empty($lig["lieu_poursuite"])){echo "value=\"".$lig['lieu_poursuite']."\"";} ?> >

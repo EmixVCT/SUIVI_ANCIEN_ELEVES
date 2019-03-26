@@ -10,7 +10,7 @@ if (!estConnecte()) {
 if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 	if (isset($_POST['mail']) and !empty($_POST['mail']) and verifieDoublonsMail("",$_POST['mail'],$connexion)){
 		
-		if(!empty($_POST['promotion']) or !empty($_POST['formation']) or !empty($_POST['lieu_poursuite']) or !empty($_POST['formation_poursuite']) or !empty($_POST['type_poursuite'])){
+		if(!empty($_POST['promotion']) or !empty($_POST['formation']) or !empty($_POST['lieu_poursuite']) or !empty($_POST['formation_poursuite']) or !empty($_POST['type_poursuite']) or !empty($_POST['etablissement_poursuite'])){
 			$req = "INSERT INTO info (";
 			$n = 0;
 			if(!empty($_POST['promotion'])){
@@ -22,11 +22,12 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 				$req .= "formation";
 				$n++;
 			}
-			if(!empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite'])){
+			if(!empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite']) && !empty($_POST['etablissement_poursuite'])){
 				if ($n != 0){$req .= ", ";}
 				$req .= "lieu_poursuite,";
 				$req .= "formation_poursuite,";
-				$req .= "type_poursuite";
+				$req .= "type_poursuite,";
+				$req .= "etablissement_poursuite";
 				$n++;
 			}
 			$req .= ') VALUES ( ';
@@ -41,11 +42,12 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 				$req .= "'".$_POST['formation']."'";
 				$n++;
 			}
-			if(!empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite'])){
+			if(!empty($_POST['formation_poursuite']) && !empty($_POST['lieu_poursuite']) && !empty($_POST['type_poursuite']) && !empty($_POST['etablissement_poursuite'])){
 				if ($n != 0){$req .= ", ";}
-				$req .= "'".$_POST['lieu_poursuite']."',";
-				$req .= "'".$_POST['formation_poursuite']."',";
-				$req .= "'".$_POST['type_poursuite']."'";
+				$req .= "\"".$_POST['lieu_poursuite']."\",";
+				$req .= "\"".$_POST['formation_poursuite']."\",";
+				$req .= "\"".$_POST['type_poursuite']."\",";
+				$req .= "\"".$_POST['etablissement_poursuite']."\"";
 				$n++;
 			}
 			
@@ -143,7 +145,7 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 		</div>
 		
 		<div class="row">
-			<div class="col-4">		
+			<div class="col-6">		
 				<label class="control-label" for="formation_poursuite">Formation poursuite</label>
 				<select class="custom-select" name="formation_poursuite" id="formation_poursuite" required>
 					<option value="">N/A</option>
@@ -158,7 +160,7 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 				<!--<input id="formation_poursuite" name="formation_poursuite" type="text" placeholder="" class="form-control input-md">-->
 			</div>
 			
-			<div class="col-4">	
+			<div class="col-6">	
 				<label class="control-label" for="type_poursuite">Type poursuite</label>  
 				<select class="custom-select" name="type_poursuite" id="type_poursuite" required>
 					<option value="">N/A</option>
@@ -167,8 +169,14 @@ if (isset($_POST['OK']) and $_POST['OK'] == 'OK'){
 				</select>
 				<!--<input id="type_poursuite" name="type_poursuite" type="text" placeholder="Alternance ou Initial" class="form-control input-md">-->
 			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<label class="control-label" for="etablissement_poursuite">Établissement poursuite</label>
+				<input id="etablissement_poursuite" name="etablissement_poursuite" type="text" placeholder="Nom" class="form-control input-md">
+				</div>
 			
-			<div class="col-4">
+			<div class="col-6">
 				<label class="control-label" for="lieu_poursuite">Lieu poursuite</label>
 				<input id="lieu_poursuite" name="lieu_poursuite" type="text" placeholder="ville / département" class="form-control input-md">
 			</div>

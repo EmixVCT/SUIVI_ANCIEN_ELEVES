@@ -62,19 +62,26 @@ if ($res = mysqli_query($connexion,$requete)){ //test si la commande est bien ex
 		</div>
 		
 		<div class="row">
-			<div class="col-4">		
+			<div class="col-6">		
 				<label class="control-label" for="formation_poursuite">Formation poursuite</label>
 				<input id="formation_poursuite" name="formation_poursuite" type="text" placeholder="[Non renseigné]" class="form-control input-md"
 				<?php if (isset($lig['formation_poursuite'])){echo "value=\"".$lig['formation_poursuite']."\"";} ?> readonly>
 			</div>
 			
-			<div class="col-4">	
+			<div class="col-6">	
 				<label class="control-label" for="type_poursuite">Type poursuite</label>  
 				<input id="type_poursuite" name="type_poursuite" type="text" placeholder="[Non renseigné]" class="form-control input-md"
 				<?php if (isset($lig['type_poursuite'])){echo "value=\"".$lig['type_poursuite']."\"";} ?> readonly>
 			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<label class="control-label" for="etablissement_poursuite">Établissement poursuite</label>
+				<input id="etablissement_poursuite" name="etablissement_poursuite" type="text" placeholder="[Non renseigné]" class="form-control input-md"
+				<?php if (isset($lig['etablissement_poursuite']) && !empty($lig["etablissement_poursuite"])){echo "value=\"".$lig['etablissement_poursuite']."\"";} ?> readonly>
+			</div>
 			
-			<div class="col-4">
+			<div class="col-6">
 				<label class="control-label" for="lieu_poursuite">Lieu poursuite</label>
 				<input id="lieu_poursuite" name="lieu_poursuite" type="text" placeholder="[Non renseigné]" class="form-control input-md"
 				<?php if (isset($lig['lieu_poursuite']) && !empty($lig["lieu_poursuite"])){echo "value=\"".$lig['lieu_poursuite']."\"";} ?> readonly>
